@@ -47,7 +47,7 @@ apt-get -dy dist-upgrade
 apt-get -y upgrade
 
 # added packages
-apt-get install -y nftables-persistent
+apt-get install -y netfilter-persistent
 apt-get install -y zsh tmux vim
 apt-get install -y cron
 apt-get install -y bridge-utils
