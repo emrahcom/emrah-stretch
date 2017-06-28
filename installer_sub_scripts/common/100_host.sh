@@ -30,6 +30,13 @@ echo >> $OLD_FILES/network.status
 echo "# ----- ip route -----" >> $OLD_FILES/network.status
 ip route >> $OLD_FILES/network.status
 
+# nftables status
+if [ -n "`command -v nft`" ]
+then
+	echo "# ----- nft list ruleset -----" >> $OLD_FILES/nftables.status
+	nft list ruleset >> $OLD_FILES/nftables.status
+fi
+
 # process status
 echo "# ----- ps auxfw -----" >> $OLD_FILES/ps.status
 ps auxfw >> $OLD_FILES/ps.status
@@ -47,7 +54,7 @@ apt-get -dy dist-upgrade
 apt-get -y upgrade
 
 # added packages
-apt-get install -y netfilter-persistent
+apt-get install -y nbtables
 apt-get install -y zsh tmux vim
 apt-get install -y cron
 apt-get install -y bridge-utils
