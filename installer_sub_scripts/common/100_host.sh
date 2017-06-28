@@ -55,7 +55,7 @@ apt-get install -y lxc debootstrap
 apt-get install -y htop iotop bmon bwm-ng
 apt-get install -y iputils-ping fping wget curl whois dnsutils
 apt-get install -y bzip2 rsync ack-grep
-apt-get install -y openntpd dnsmasq-base
+apt-get install -y openntpd dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
