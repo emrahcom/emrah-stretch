@@ -49,20 +49,20 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # PACKAGES
 # -----------------------------------------------------------------------------
 # repo update & upgrade
-apt-get update
-apt-get -dy dist-upgrade
-apt-get -y upgrade
+apt update
+apt -dy dist-upgrade
+apt -y upgrade
 
 # added packages
-apt-get install -y nbtables
-apt-get install -y zsh tmux vim
-apt-get install -y cron
-apt-get install -y bridge-utils
-apt-get install -y lxc debootstrap
-apt-get install -y htop iotop bmon bwm-ng
-apt-get install -y iputils-ping fping wget curl whois dnsutils
-apt-get install -y bzip2 rsync ack-grep
-apt-get install -y openntpd dnsmasq
+apt install -y nbtables
+apt install -y zsh tmux vim
+apt install -y cron
+apt install -y bridge-utils
+apt install -y lxc debootstrap
+apt install -y htop iotop bmon bwm-ng
+apt install -y iputils-ping fping wget curl whois dnsutils
+apt install -y bzip2 rsync ack-grep
+apt install -y openntpd dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
