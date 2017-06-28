@@ -29,9 +29,10 @@ echo HOST="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # private bridge interface for the containers
-EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
-[ -z "$EXISTS" ] && brctl addbr $BRIDGE
-ip addr add dev $BRIDGE $IP/24
+BR_EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
+[ -z "$BR_EXISTS" ] && brctl addbr $BRIDGE
+IP_EXISTS=$(brctl show dev $BRIDGE | egrep "inet $IP/24" || true)
+[ -z "$IP_EXISTS" ] && ip addr add dev $BRIDGE $IP/24
 
 # IP forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
