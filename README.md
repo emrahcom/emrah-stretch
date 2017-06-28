@@ -72,5 +72,4 @@ Please, use one of the followings as a host:
 
 -  a Debian Stretch container
 
--  a physical machine with a fresh installed [Debian Stretch]
-   (https://www.debian.org/distrib/netinst)
+-  a physical machine with a fresh installed [Debian Stretch](https://www.debian.org/distrib/netinst)
