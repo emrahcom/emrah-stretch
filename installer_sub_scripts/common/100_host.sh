@@ -54,7 +54,7 @@ apt -dy dist-upgrade
 apt -y upgrade
 
 # added packages
-apt install -y nbtables
+apt install -y nftables
 apt install -y zsh tmux vim
 apt install -y cron
 apt install -y bridge-utils
