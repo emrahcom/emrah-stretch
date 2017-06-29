@@ -44,7 +44,7 @@ nft add table es-filter
 nft add chain es-filter input { type filter hook input priority 0 \; }
 nft add chain es-filter forward { type filter hook forward priority 0 \; }
 nft add chain es-filter output { type filter hook output priority 0 \; }
-# drop packets coming from the public interface to private IP
+# drop packets coming from the public interface to the private network
 nft add rule es-filter output iif $PUBLIC_INTERFACE ip daddr 172.22.22.0/24 drop
 
 nft add table es-nat
