@@ -40,13 +40,18 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 # -----------------------------------------------------------------------------
 # NFTABLES
 # -----------------------------------------------------------------------------
+nft add table es-filter
+nft add chain es-filter input { type filter hook input priority 0 \; }
+nft add chain es-filter forward { type filter hook forward priority 0 \; }
+nft add chain es-filter output { type filter hook output priority 0 \; }
 # drop packets coming from the public interface to private IP
-#iptables -C INPUT -d $IP -i $PUBLIC_INTERFACE -j DROP || \
-#iptables -A INPUT -d $IP -i $PUBLIC_INTERFACE -j DROP
+nft add rule es-filter output iif $PUBLIC_INTERFACE ip daddr 172.22.22.0/24 drop
 
+nft add table es-nat
+nft add chain es-nat prerouting { type nat hook prerouting priority 0 \; }
+nft add chain es-nat postrouting { type nat hook postrouting priority 100 \; }
 # masquerade packets coming from the private network
-#iptables -t nat -C POSTROUTING -s 172.22.22.0/24 -o $PUBLIC_INTERFACE -j MASQUERADE || \
-#iptables -t nat -A POSTROUTING -s 172.22.22.0/24 -o $PUBLIC_INTERFACE -j MASQUERADE
+nft add rule es-nat postrouting ip saddr 172.22.22.0/24 masquerade
 
 # -----------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
