@@ -56,14 +56,12 @@ apt -y upgrade
 
 # added packages
 apt install -y nftables
+apt install -y lxc debootstrap bridge-utils
+apt install -y openntpd dnsmasq cron
 apt install -y zsh tmux vim
-apt install -y cron
-apt install -y bridge-utils
-apt install -y lxc debootstrap
 apt install -y htop iotop bmon bwm-ng
 apt install -y iputils-ping fping wget curl whois dnsutils
 apt install -y bzip2 rsync ack-grep
-apt install -y openntpd dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
