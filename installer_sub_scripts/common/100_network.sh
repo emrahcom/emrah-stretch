@@ -58,6 +58,8 @@ TABLE_EXISTS=$(nft list ruleset | grep "table ip es-host-nat" || true)
 [ -n "$TABLE_EXISTS" ] && nft delete table ip es-host-nat
 
 nft add table ip es-host-nat
+nft add chain ip es-host-nat prerouting \
+    { type nat hook prerouting priority 0 \; }
 nft add chain ip es-host-nat postrouting \
     { type nat hook postrouting priority 100 \; }
 # masquerade packets coming from the private network
