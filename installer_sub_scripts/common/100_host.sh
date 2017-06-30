@@ -21,6 +21,7 @@ OLD_FILES="/root/es_old_files/$DATE"
 mkdir -p $OLD_FILES
 
 # backup the files which will be changed
+[ -f /etc/nftables.conf ] && cp /etc/nftables.conf $OLD_FILES/
 [ -f /etc/network/interfaces ] && cp /etc/network/interfaces $OLD_FILES/
 
 # network status

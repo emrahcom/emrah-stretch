@@ -60,6 +60,9 @@ nft add rule es-nat postrouting ip saddr 172.22.22.0/24 masquerade
 systemctl stop dnsmasq.service
 systemctl start dnsmasq.service
 
+# nftables
+systemctl enable nftables.service
+
 # -----------------------------------------------------------------------------
 # STATUS
 # -----------------------------------------------------------------------------
