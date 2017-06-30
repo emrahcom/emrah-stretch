@@ -57,19 +57,13 @@ apt -y upgrade
 # added packages
 apt install -y nftables
 apt install -y lxc debootstrap bridge-utils
-apt install -y openntpd dnsmasq cron
-apt install -y zsh tmux vim
-apt install -y htop iotop bmon bwm-ng
-apt install -y iputils-ping fping wget curl whois dnsutils
-apt install -y bzip2 rsync ack-grep
+apt install -y openntpd dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
 # changed/added system files
-cp ../../host/etc/cron.d/es_update /etc/cron.d/
 cp ../../host/etc/sysctl.d/es_ip_forward.conf /etc/sysctl.d/
-cp ../../host/etc/sysctl.d/es_max_user_instances.conf /etc/sysctl.d/
 cp ../../host/etc/network/interfaces.d/es_bridge /etc/network/interfaces.d/
 cp ../../host/etc/dnsmasq.d/es_interface /etc/dnsmasq.d/
 cp ../../host/etc/dnsmasq.d/es_hosts /etc/dnsmasq.d/
@@ -87,23 +81,3 @@ echo -e "\nsource /etc/network/interfaces.d/es_bridge" >> /etc/network/interface
 
 # sysctl.d
 sysctl -p
-
-# -----------------------------------------------------------------------------
-# ROOT USER
-# -----------------------------------------------------------------------------
-# added directories
-mkdir -p /root/es_scripts
-
-# changed/added files
-cp ../../host/root/es_scripts/update_debian.sh /root/es_scripts/
-cp ../../host/root/es_scripts/update_container.sh /root/es_scripts/
-cp ../../host/root/es_scripts/upgrade_debian.sh /root/es_scripts/
-cp ../../host/root/es_scripts/upgrade_container.sh /root/es_scripts/
-cp ../../host/root/es_scripts/upgrade_all.sh /root/es_scripts/
-
-# file permissons
-chmod u+x /root/es_scripts/update_debian.sh
-chmod u+x /root/es_scripts/update_container.sh
-chmod u+x /root/es_scripts/upgrade_debian.sh
-chmod u+x /root/es_scripts/upgrade_container.sh
-chmod u+x /root/es_scripts/upgrade_all.sh
