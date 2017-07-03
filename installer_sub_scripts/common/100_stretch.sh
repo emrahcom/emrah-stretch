@@ -71,29 +71,13 @@ lxc-attach -n $MACH -- apt dist-upgrade -y
 lxc-attach -n $MACH -- apt autoclean
 
 # packages
-lxc-attach -n $MACH -- apt install -y less tmux vim wget zsh 
 lxc-attach -n $MACH -- apt install -y openssh-server openssh-client
-lxc-attach -n $MACH -- apt install -y dnsutils curl htop bmon bwm-ng
-lxc-attach -n $MACH -- apt install -y rsync bzip2 man ack-grep
 lxc-attach -n $MACH -- apt install -y cron logrotate
 lxc-attach -n $MACH -- apt install -y dbus libpam-systemd
 
 # -----------------------------------------------------------------------------
-# SYSTEM CONFIGURATION
-# -----------------------------------------------------------------------------
-# changed/added system files
-#cp etc/ssh/ssh_config $ROOTFS/etc/ssh/
-#cp etc/ssh/sshd_config $ROOTFS/etc/ssh/
-
-# -----------------------------------------------------------------------------
 # ROOT USER
 # -----------------------------------------------------------------------------
-# shell
-lxc-attach -n $MACH -- chsh -s /bin/zsh root
-#cp root/.bashrc $ROOTFS/root/
-#cp root/.vimrc $ROOTFS/root/
-#cp root/.zshrc $ROOTFS/root/
-
 # ssh
 if [ -f /root/.ssh/authorized_keys ]
 then
