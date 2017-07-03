@@ -95,11 +95,17 @@ chmod 744 $ROOTFS/root/es_scripts/update_debian.sh
 chmod 744 $ROOTFS/root/es_scripts/upgrade_debian.sh
 
 # -----------------------------------------------------------------------------
-# IPTABLES RULES
+# NFTABLES RULES
 # -----------------------------------------------------------------------------
 # public ssh
-#iptables -t nat -C PREROUTING ! -d $HOST -i $PUBLIC_INTERFACE -p tcp --dport $SSH_PORT -j DNAT --to $IP:22 || \
-#iptables -t nat -A PREROUTING ! -d $HOST -i $PUBLIC_INTERFACE -p tcp --dport $SSH_PORT -j DNAT --to $IP:22
+TABLE_EXISTS=$(nft list ruleset | grep "table ip es-stretch-nat" || true)
+[ -n "$TABLE_EXISTS" ] && nft delete table ip es-stretch-nat
+
+nft add table ip es-stretch-nat
+nft add chain ip es-stretch-nat prerouting \
+    { type nat hook prerouting priority 0 \; }
+nft add rule ip es-stretch-nat prerouting \
+    iif $PUBLIC_INTERFACE tcp dport $SSH_PORT dnat $IP:22
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
