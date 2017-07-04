@@ -72,7 +72,8 @@ nft add map ip es-nat port2ip \
 nft add map ip es-nat port2port \
     { type inet_service : inet_service \; }
 nft add rule ip es-nat prerouting \
-    dnat tcp dport map @port2ip : tcp dport map @port2port
+    dnat tcp dport map @port2ip : tcp dport map @port2port \
+    comment \"FIXME missing port2ip\"
 
 # -----------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
