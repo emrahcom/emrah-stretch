@@ -98,14 +98,8 @@ chmod 744 $ROOTFS/root/es_scripts/upgrade_debian.sh
 # NFTABLES RULES
 # -----------------------------------------------------------------------------
 # public ssh
-TABLE_EXISTS=$(nft list ruleset | grep "table ip es-stretch-nat" || true)
-[ -n "$TABLE_EXISTS" ] && nft delete table ip es-stretch-nat
-
-nft add table ip es-stretch-nat
-nft add chain ip es-stretch-nat prerouting \
-    { type nat hook prerouting priority 0 \; }
-nft add rule ip es-stretch-nat prerouting \
-    iif $PUBLIC_INTERFACE tcp dport $SSH_PORT dnat $IP:22
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES

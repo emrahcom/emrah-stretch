@@ -40,31 +40,39 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 # -----------------------------------------------------------------------------
 # NFTABLES
 # -----------------------------------------------------------------------------
-TABLE_EXISTS=$(nft list ruleset | grep "table inet es-host-filter" || true)
-[ -n "$TABLE_EXISTS" ] && nft delete table inet es-host-filter
+TABLE_EXISTS=$(nft list ruleset | grep "table inet es-filter" || true)
+[ -n "$TABLE_EXISTS" ] && nft delete table inet es-filter
 
-nft add table inet es-host-filter
-nft add chain inet es-host-filter \
+nft add table inet es-filter
+nft add chain inet es-filter \
     input { type filter hook input priority 0 \; }
-nft add chain inet es-host-filter \
+nft add chain inet es-filter \
     forward { type filter hook forward priority 0 \; }
-nft add chain inet es-host-filter \
+nft add chain inet es-filter \
     output { type filter hook output priority 0 \; }
 # drop packets coming from the public interface to the private network
-nft add rule inet es-host-filter output \
+nft add rule inet es-filter output \
     iif $PUBLIC_INTERFACE ip daddr 172.22.22.0/24 drop
 
-TABLE_EXISTS=$(nft list ruleset | grep "table ip es-host-nat" || true)
-[ -n "$TABLE_EXISTS" ] && nft delete table ip es-host-nat
+TABLE_EXISTS=$(nft list ruleset | grep "table ip es-nat" || true)
+[ -n "$TABLE_EXISTS" ] && nft delete table ip es-nat
 
-nft add table ip es-host-nat
-nft add chain ip es-host-nat prerouting \
+nft add table ip es-nat
+nft add chain ip es-nat prerouting \
     { type nat hook prerouting priority 0 \; }
-nft add chain ip es-host-nat postrouting \
+nft add chain ip es-nat postrouting \
     { type nat hook postrouting priority 100 \; }
 # masquerade packets coming from the private network
-nft add rule ip es-host-nat postrouting \
+nft add rule ip es-nat postrouting \
     ip saddr 172.22.22.0/24 masquerade
+
+# dnat maps
+nft add map ip es-nat port2ip \
+    { type inet_service : ipv4_addr \; }
+nft add map ip es-nat port2port \
+    { type inet_service : inet_service \; }
+nft add rule ip es-nat prerouting \
+    dnat tcp dport map @port2ip : tcp dport map @port2port
 
 # -----------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
