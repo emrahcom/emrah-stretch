@@ -28,7 +28,7 @@ lxc-attach -n $MACH -- apt dist-upgrade -y
 
 # packages
 lxc-attach -n $MACH -- apt install -y less tmux vim zsh autojump
-lxc-attach -n $MACH -- apt install -y wget curl dnsutils
+lxc-attach -n $MACH -- apt install -y wget curl dnsutils iputils-ping
 lxc-attach -n $MACH -- apt install -y htop bmon bwm-ng
 lxc-attach -n $MACH -- apt install -y rsync bzip2 man-db ack-grep
 
