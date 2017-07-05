@@ -1,3 +1,3 @@
 #!/bin/bash
 
-apt update && apt autoclean && apt -dy dist-upgrade
+apt update && apt -dy dist-upgrade

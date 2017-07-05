@@ -25,7 +25,6 @@ lxc-wait -n $MACH -s RUNNING
 # update
 lxc-attach -n $MACH -- apt update
 lxc-attach -n $MACH -- apt dist-upgrade -y
-lxc-attach -n $MACH -- apt autoclean
 
 # packages
 lxc-attach -n $MACH -- apt install -y less tmux vim zsh autojump
