@@ -31,8 +31,9 @@ echo HOST="$IP" >> \
 # private bridge interface for the containers
 BR_EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
 [ -z "$BR_EXISTS" ] && brctl addbr $BRIDGE
+ip link set $BRIDGE up
 IP_EXISTS=$(ip a show dev $BRIDGE | egrep "inet $IP/24" || true)
-[ -z "$IP_EXISTS" ] && ip addr add dev $BRIDGE $IP/24
+[ -z "$IP_EXISTS" ] && ip addr add dev $BRIDGE $IP/24 brd 172.22.22.255
 
 # IP forwarding
 echo 1 > /proc/sys/net/ipv4/ip_forward
