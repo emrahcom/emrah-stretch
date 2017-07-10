@@ -12,7 +12,7 @@ MACH="es-stretch"
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/es_hosts | head -n1)
 IP=${DNS_RECORD##*/}
-SSH_PORT="30${IP##*.}"
+SSH_PORT="30$(printf %03d ${IP##*.})"
 echo STRETCH="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
