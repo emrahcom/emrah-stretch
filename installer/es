@@ -86,8 +86,8 @@ set -e
 # -----------------------------------------------------------------------------
 if [ "$DONT_CLONE_GIT_REPO" != true ]
 then
-	apt update
-	apt install -y git
+	apt $APT_PROXY_OPTION update
+	apt $APT_PROXY_OPTION -y install git
 
 	rm -rf $GIT_LOCAL_DIR
 	git clone --depth=1 -b $GIT_BRANCH $GIT_REPO $GIT_LOCAL_DIR

@@ -18,16 +18,16 @@ echo "---------------------- HOST CUSTOM ------------------------"
 # PACKAGES
 # -----------------------------------------------------------------------------
 # repo update & upgrade
-apt update
-apt -dy dist-upgrade
-apt -y upgrade
+apt $APT_PROXY_OPTION update
+apt $APT_PROXY_OPTION -yd dist-upgrade
+apt $APT_PROXY_OPTION -y upgrade
 
 # added packages
-apt install -y cron
-apt install -y zsh tmux vim
-apt install -y htop iotop bmon bwm-ng
-apt install -y iputils-ping fping wget curl whois dnsutils
-apt install -y bzip2 rsync ack-grep
+apt $APT_PROXY_OPTION -y install cron
+apt $APT_PROXY_OPTION -y install zsh tmux vim
+apt $APT_PROXY_OPTION -y install htop iotop bmon bwm-ng
+apt $APT_PROXY_OPTION -y install iputils-ping fping wget curl whois dnsutils
+apt $APT_PROXY_OPTION -y install bzip2 rsync ack-grep
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION

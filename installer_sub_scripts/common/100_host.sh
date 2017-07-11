@@ -50,14 +50,14 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # PACKAGES
 # -----------------------------------------------------------------------------
 # repo update & upgrade
-apt update
-apt -dy dist-upgrade
-apt -y upgrade
+apt $APT_PROXY_OPTION update
+apt $APT_PROXY_OPTION -yd dist-upgrade
+apt $APT_PROXY_OPTION -y upgrade
 
 # added packages
-apt install -y nftables
-apt install -y lxc debootstrap bridge-utils
-apt install -y openntpd dnsmasq
+apt $APT_PROXY_OPTION -y install nftables
+apt $APT_PROXY_OPTION -y install lxc debootstrap bridge-utils
+apt $APT_PROXY_OPTION -y install openntpd dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION

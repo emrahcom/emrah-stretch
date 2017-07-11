@@ -66,14 +66,17 @@ lxc-wait -n $MACH -s RUNNING
 # PACKAGES
 # -----------------------------------------------------------------------------
 # update
-lxc-attach -n $MACH -- apt update
-lxc-attach -n $MACH -- apt dist-upgrade -y
+lxc-attach -n $MACH -- apt $APT_PROXY_OPTION update
+lxc-attach -n $MACH -- apt $APT_PROXY_OPTION -y dist-upgrade
 
 # packages
-lxc-attach -n $MACH -- apt install -y openssh-server openssh-client
-lxc-attach -n $MACH -- apt install -y cron logrotate
-lxc-attach -n $MACH -- apt install -y dbus libpam-systemd
-lxc-attach -n $MACH -- apt install -y wget ca-certificates zsh
+lxc-attach -n $MACH -- apt $APT_PROXY_OPTION -y install zsh
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "apt $APT_PROXY_OPTION -y install openssh-server openssh-client
+     apt $APT_PROXY_OPTION -y install cron logrotate
+     apt $APT_PROXY_OPTION -y install dbus libpam-systemd
+     apt $APT_PROXY_OPTION -y install wget ca-certificates"
 
 # -----------------------------------------------------------------------------
 # ROOT USER

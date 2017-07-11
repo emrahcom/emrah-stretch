@@ -29,21 +29,22 @@ lxc-wait -n $MACH -s RUNNING
 cp etc/apt/sources.list.d/multimedia.list $ROOTFS/etc/apt/sources.list.d/
 lxc-attach -n $MACH -- \
     zsh -c \
-    'apt update -oAcquire::AllowInsecureRepositories=true
-     apt install -y --allow-unauthenticated deb-multimedia-keyring'
+    "apt $APT_PROXY_OPTION -oAcquire::AllowInsecureRepositories=true update
+     apt $APT_PROXY_OPTION --allow-unauthenticated -y install \
+         deb-multimedia-keyring"
 
 # update
 lxc-attach -n $MACH -- \
     zsh -c \
-    'apt update
-     apt dist-upgrade -y'
+    "apt $APT_PROXY_OPTION update
+     apt $APT_PROXY_OPTION -y dist-upgrade"
 
 # packages
 lxc-attach -n $MACH -- \
     zsh -c \
-    'export DEBIAN_FRONTEND=noninteractive
-     apt install -y ffmpeg
-     apt build-dep -y nginx'
+    "export DEBIAN_FRONTEND=noninteractive
+     apt $APT_PROXY_OPTION -y install ffmpeg
+     apt $APT_PROXY_OPTION -y build-dep nginx"
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES

@@ -25,16 +25,16 @@ lxc-wait -n $MACH -s RUNNING
 # update
 lxc-attach -n $MACH -- \
     zsh -c \
-    'apt update
-     apt dist-upgrade -y'
+    "apt $APT_PROXY_OPTION update
+     apt $APT_PROXY_OPTION -y dist-upgrade"
 
 # packages
 lxc-attach -n $MACH -- \
     zsh -c \
-    'apt install -y less tmux vim autojump
-     apt install -y curl dnsutils iputils-ping
-     apt install -y htop bmon bwm-ng
-     apt install -y rsync bzip2 man-db ack-grep'
+    "apt $APT_PROXY_OPTION -y install less tmux vim autojump
+     apt $APT_PROXY_OPTION -y install curl dnsutils iputils-ping
+     apt $APT_PROXY_OPTION -y install htop bmon bwm-ng
+     apt $APT_PROXY_OPTION -y install rsync bzip2 man-db ack-grep"
 
 # -----------------------------------------------------------------------------
 # ROOT USER

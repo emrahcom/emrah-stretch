@@ -79,15 +79,15 @@ lxc-wait -n $MACH -s RUNNING
 # update
 lxc-attach -n $MACH -- \
     zsh -c \
-    'apt update
-     apt dist-upgrade -y'
+    "apt $APT_PROXY_OPTION update
+     apt $APT_PROXY_OPTION -y dist-upgrade"
 
 # packages
 lxc-attach -n $MACH -- \
     zsh -c \
-    'export DEBIAN_FRONTEND=noninteractive
-     apt install -y dpkg-dev build-essential git
-     apt install -y fakeroot unzip'
+    "export DEBIAN_FRONTEND=noninteractive
+     apt $APT_PROXY_OPTION -y install dpkg-dev build-essential git
+     apt $APT_PROXY_OPTION -y install fakeroot unzip"
 
 # -----------------------------------------------------------------------------
 # NFTABLES RULES
