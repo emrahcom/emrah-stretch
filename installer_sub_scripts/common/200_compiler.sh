@@ -77,8 +77,10 @@ lxc-wait -n $MACH -s RUNNING
 # PACKAGES
 # -----------------------------------------------------------------------------
 # update
-lxc-attach -n $MACH -- apt update
-lxc-attach -n $MACH -- apt dist-upgrade -y
+lxc-attach -n $MACH -- \
+    zsh -c \
+    'apt update
+     apt dist-upgrade -y'
 
 # packages
 lxc-attach -n $MACH -- \

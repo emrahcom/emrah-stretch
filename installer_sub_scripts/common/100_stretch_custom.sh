@@ -23,14 +23,18 @@ lxc-wait -n $MACH -s RUNNING
 # PACKAGES
 # -----------------------------------------------------------------------------
 # update
-lxc-attach -n $MACH -- apt update
-lxc-attach -n $MACH -- apt dist-upgrade -y
+lxc-attach -n $MACH -- \
+    zsh -c \
+    'apt update
+     apt dist-upgrade -y'
 
 # packages
-lxc-attach -n $MACH -- apt install -y less tmux vim autojump
-lxc-attach -n $MACH -- apt install -y curl dnsutils iputils-ping
-lxc-attach -n $MACH -- apt install -y htop bmon bwm-ng
-lxc-attach -n $MACH -- apt install -y rsync bzip2 man-db ack-grep
+lxc-attach -n $MACH -- \
+    zsh -c \
+    'apt install -y less tmux vim autojump
+     apt install -y curl dnsutils iputils-ping
+     apt install -y htop bmon bwm-ng
+     apt install -y rsync bzip2 man-db ack-grep'
 
 # -----------------------------------------------------------------------------
 # ROOT USER

@@ -27,12 +27,16 @@ lxc-wait -n $MACH -s RUNNING
 # -----------------------------------------------------------------------------
 # multimedia repo
 cp etc/apt/sources.list.d/multimedia.list $ROOTFS/etc/apt/sources.list.d/
-lxc-attach -n $MACH -- apt update
-lxc-attach -n $MACH -- apt install -y --force-yes deb-multimedia-keyring
+lxc-attach -n $MACH -- \
+    zsh -c \
+    'apt update -oAcquire::AllowInsecureRepositories=true
+     apt install -y --allow-unauthenticated deb-multimedia-keyring'
 
 # update
-lxc-attach -n $MACH -- apt update
-lxc-attach -n $MACH -- apt dist-upgrade -y
+lxc-attach -n $MACH -- \
+    zsh -c \
+    'apt update
+     apt dist-upgrade -y'
 
 # packages
 lxc-attach -n $MACH -- \
