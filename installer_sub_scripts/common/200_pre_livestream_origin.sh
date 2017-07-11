@@ -70,10 +70,10 @@ lxc-attach -n $MACH -- \
      dpkg-buildpackage -rfakeroot -uc -b
 
      cd ..
-     mkdir -p /usr/local/ej/deb/livestream-origin
-     rm -f /usr/local/ej/deb/livestream-origin/libnginx-*.deb
-     rm -f /usr/local/ej/deb/livestream-origin/nginx-*.deb
-     mv libnginx-*.deb nginx-*.deb /usr/local/ej/deb/livestream-origin/'
+     mkdir -p /usr/local/es/deb/livestream-origin
+     rm -f /usr/local/es/deb/livestream-origin/libnginx-*.deb
+     rm -f /usr/local/es/deb/livestream-origin/nginx-*.deb
+     mv libnginx-*.deb nginx-*.deb /usr/local/es/deb/livestream-origin/'
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
