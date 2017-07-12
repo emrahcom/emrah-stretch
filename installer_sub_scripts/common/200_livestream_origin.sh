@@ -105,7 +105,9 @@ lxc-attach -n $MACH -- \
      mkdir -p /usr/local/ej/livestream/stat/
      gunzip -c /usr/share/doc/nginx-doc/examples/rtmp_stat.xsl.gz > \
          /usr/local/ej/livestream/stat/rtmp_stat.xsl
-     chown www-data: /usr/local/ej/livestream/stat -R"
+     chown www-data: /usr/local/ej/livestream/stat -R
+     ln -s hls /usr/local/ej/livestream/ts2hsl
+     ln -s dash /usr/local/ej/livestream/ts2dash"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION

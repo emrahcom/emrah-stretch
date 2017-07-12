@@ -12,8 +12,8 @@ server {
 	# mpeg-ts publish
 	location /livestream/publish {
 		ts;
-		ts_hls path=/usr/local/ej/livestream/hls segment=5s:20s;
-		ts_dash path=/usr/local/ej/livestream/dash segment=5s:20s;
+		ts_hls path=/usr/local/ej/livestream/ts2hls segment=5s:20s;
+		ts_dash path=/usr/local/ej/livestream/ts2dash segment=5s:20s;
 	}
 
 	# hls play
