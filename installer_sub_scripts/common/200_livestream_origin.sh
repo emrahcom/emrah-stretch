@@ -116,6 +116,10 @@ cp etc/nginx/nginx.conf $ROOTFS/etc/nginx/
 cp etc/nginx/conf.d/custom.conf $ROOTFS/etc/nginx/conf.d/
 cp etc/nginx/sites-available/default $ROOTFS/etc/nginx/sites-available/
 
+cp root/es_scripts/livestream_cleanup.sh $ROOTFS/root/es_scripts/
+chmod u+x $ROOTFS/root/es_scripts/livestream_cleanup.sh
+cp etc/cron.d/es_livestream_cleanup $ROOTFS/etc/cron.d/
+
 # -----------------------------------------------------------------------------
 # NFTABLES RULES
 # -----------------------------------------------------------------------------
