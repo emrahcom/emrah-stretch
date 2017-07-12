@@ -46,8 +46,9 @@ lxc-attach -n $MACH -- \
      apt $APT_PROXY_OPTION -y install ffmpeg
      apt $APT_PROXY_OPTION -y build-dep nginx"
 
-# nginx MPEG-TS live module
-ZIP="https://github.com/arut/nginx-ts-module/archive/master.zip"
+# nginx RTMP & MPEG-TS modules
+MPEGTS="https://github.com/arut/nginx-ts-module/archive/master.zip"
+RTMP="https://github.com/arut/nginx-rtmp-module/archive/master.zip"
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
@@ -56,17 +57,29 @@ lxc-attach -n $MACH -- \
      setopt +o nomatch
      rm -rf nginx_* nginx-* libnginx-mod-*
      apt $APT_PROXY_OPTION source nginx
-     wget $ZIP -O master.zip
-     unzip master.zip"
+
+     wget $MPEGTS -O mpegts.zip
+     unzip mpegts.zip
+     
+     wget $RTMP -O rtmp.zip
+     unzip rtmp.zip"
 
 lxc-attach -n $MACH -- \
     zsh -c \
     'cd /root/source
      NGINX_VERSION=$(ls nginx-[1-9].* -d)
      mv nginx-ts-module-master $NGINX_VERSION/debian/modules/nginx-ts-module
+     mv nginx-rtmp-module-master \
+         $NGINX_VERSION/debian/modules/nginx-rtmp-module
      sed -i "/--add-dynamic-module=.*headers-more-nginx-module/i \
-         \\\\t\t\t--add-module=\$(MODULESDIR)\/nginx-ts-module \\\\"
+         \\\\t\t\t--add-module=\$(MODULESDIR)\/nginx-ts-module \\\\" \
+	 $NGINX_VERSION/debian/rules
+     sed -i "/--add-dynamic-module=.*headers-more-nginx-module/i \
+         \\\\t\t\t--add-module=\$(MODULESDIR)\/nginx-rtmp-module \\\\" \
+	 $NGINX_VERSION/debian/rules
      cd $NGINX_VERSION
+     cp debian/modules/nginx-rtmp-module/stat.xsl \
+         debian/help/examples/rtmp_stat.xsl
      dpkg-buildpackage -rfakeroot -uc -b
 
      cd ..
