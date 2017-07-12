@@ -59,7 +59,7 @@ cp etc/apt/sources.list $ROOTFS/etc/apt/
 cp etc/apt/apt.conf.d/80recommends $ROOTFS/etc/apt/apt.conf.d/
 
 # start container
-lxc-start -d -n $MACH
+lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
 
 # -----------------------------------------------------------------------------

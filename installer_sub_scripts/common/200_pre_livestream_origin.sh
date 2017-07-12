@@ -19,7 +19,7 @@ echo "------------------ PRE LIVESTREAM ORIGIN ------------------"
 # CONTAINER SETUP
 # -----------------------------------------------------------------------------
 # start container
-lxc-start -d -n $MACH
+lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
 
 # -----------------------------------------------------------------------------

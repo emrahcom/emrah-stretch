@@ -70,7 +70,7 @@ lxc.network.ipv4.gateway = auto
 EOF
 
 # start container
-lxc-start -d -n $MACH
+lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
 
 # -----------------------------------------------------------------------------
@@ -134,5 +134,7 @@ nft add element es-nat port2port { 8000 : 80 }
 # -----------------------------------------------------------------------------
 lxc-attach -n $MACH -- systemctl reload nginx
 
-lxc-stop -n $MACH -r
+lxc-stop -n $MACH
+lxc-wait -n $MACH -s STOPPED
+lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING

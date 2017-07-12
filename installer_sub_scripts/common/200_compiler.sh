@@ -70,7 +70,7 @@ lxc.network.ipv4.gateway = auto
 EOF
 
 # start container
-lxc-start -d -n $MACH
+lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
 
 # -----------------------------------------------------------------------------
