@@ -12,7 +12,7 @@ then
 	exit 1
 fi
 
-export INSTALLER="$1"
+export INSTALLER="$(echo $1 | cut -d. -f1)"
 export CONFIG_FILE="${INSTALLER}.conf"
 export FREE_SPACE_NEEDED="1000000"
 
