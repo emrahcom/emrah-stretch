@@ -107,5 +107,5 @@ nft add element es-nat port2port { $SSH_PORT : 22 }
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
-lxc-attach -n $MACH -- poweroff
+lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
