@@ -6,14 +6,14 @@ server {
 	listen [::]:80 default_server;
 
 	server_name _;
-	root /usr/local/ej/livestream;
+	root /usr/local/es/livestream;
 	index index.html index.htm;
 
 	# mpeg-ts publish
 	location /livestream/publish {
 		ts;
-		ts_hls path=/usr/local/ej/livestream/ts2hls segment=5s:20s;
-		ts_dash path=/usr/local/ej/livestream/ts2dash segment=5s:20s;
+		ts_hls path=/usr/local/es/livestream/ts2hls segment=5s:20s;
+		ts_dash path=/usr/local/es/livestream/ts2dash segment=5s:20s;
 	}
 
 	# hls play
@@ -23,7 +23,7 @@ server {
 			video/MP2T ts;
 		}
 
-		alias /usr/local/ej/livestream/hls;
+		alias /usr/local/es/livestream/hls;
 
 		add_header Cache-Control no-cache;
 		add_header X-Host $host;
@@ -38,7 +38,7 @@ server {
 			video/mp4 mp4;
 		}
 
-		alias /usr/local/ej/livestream/dash;
+		alias /usr/local/es/livestream/dash;
 
 		add_header Cache-Control no-cache;
 		add_header X-Host $host;
@@ -58,7 +58,7 @@ server {
 
 	# rtmp_stat.xsl view
 	location /livestream/rtmp_stat.xsl {
-		alias /usr/local/ej/livestream/stat/rtmp_stat.xsl;
+		alias /usr/local/es/livestream/stat/rtmp_stat.xsl;
 
 		add_header X-Host $host;
 		add_header X-Node "rmtp_stat_xls";
