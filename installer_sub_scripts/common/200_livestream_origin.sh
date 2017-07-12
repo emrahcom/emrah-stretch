@@ -49,11 +49,11 @@ sed -i '/\/var\/cache\/apt\/archives/d' /var/lib/lxc/$MACH/config
 sed -i '/lxc\.network\./d' /var/lib/lxc/$MACH/config
 cat >> /var/lib/lxc/$MACH/config <<EOF
 
-#lxc.start.auto = 1
+lxc.start.auto = 1
 lxc.start.order = 600
 lxc.start.delay = 2
 lxc.group = es-group
-#lxc.group = onboot
+lxc.group = onboot
 
 lxc.mount.entry = /var/cache/apt/archives \
 $ROOTFS/var/cache/apt/archives none bind 0 0
@@ -94,7 +94,25 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install ffmpeg
-     "
+     apt $APT_PROXY_OPTION -y install libgd3 libluajit-5.1-2 libxslt1.1 \
+         libhiredis0.13
+     dpkg -i /usr/local/es/deb/livestream-origin/nginx-common_*.deb
+     dpkg -i /usr/local/es/deb/livestream-origin/libnginx-mod-*.deb
+     dpkg -i /usr/local/es/deb/livestream-origin/nginx-extras_*.deb
+     dpkg -i /usr/local/es/deb/livestream-origin/nginx-doc_*.deb
+     apt-mark hold nginx-common nginx-extras nginx-doc
+
+     mkdir -p /usr/local/ej/livestream/stat/
+     gunzip -c /usr/share/doc/nginx-doc/examples/rtmp_stat.xsl.gz > \
+         /usr/local/ej/livestream/stat/rtmp_stat.xsl
+     chown www-data: /usr/local/ej/livestream/stat -R"
+
+# -----------------------------------------------------------------------------
+# SYSTEM CONFIGURATION
+# -----------------------------------------------------------------------------
+cp etc/nginx/nginx.conf $ROOTFS/etc/nginx/
+cp etc/nginx/conf.d/custom.conf $ROOTFS/etc/nginx/conf.d/
+cp etc/nginx/sites-available/default $ROOTFS/etc/nginx/sites-available/
 
 # -----------------------------------------------------------------------------
 # NFTABLES RULES
@@ -107,10 +125,12 @@ nft add element es-nat port2ip { 1935 : $IP }
 nft add element es-nat port2port { 1935 : 1935 }
 # mpeg-ts push
 nft add element es-nat port2ip { 8000 : $IP }
-nft add element es-nat port2port { 8000 : 8000 }
+nft add element es-nat port2port { 8000 : 80 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
-lxc-stop -n $MACH
-lxc-wait -n $MACH -s STOPPED
+lxc-attach -n $MACH -- systemctl reload nginx
+
+lxc-stop -n $MACH -r
+lxc-wait -n $MACH -s RUNNING
