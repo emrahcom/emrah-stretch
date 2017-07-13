@@ -48,7 +48,7 @@ lxc-attach -n $MACH -- \
 
 # nginx RTMP & MPEG-TS modules
 MPEGTS="https://github.com/arut/nginx-ts-module/archive/master.zip"
-RTMP="https://github.com/sergey-dryabzhinsky/nginx-rtmp-module/archive/master.zip"
+RTMP="https://github.com/arut/nginx-rtmp-module/archive/master.zip"
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
