@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# # DEFAULT SERVER
+# DEFAULT SERVER
 # -----------------------------------------------------------------------------
 server {
 	listen 80 default_server;
@@ -8,15 +8,19 @@ server {
 	server_name _;
 	root /usr/local/es/livestream;
 	index index.html index.htm;
-
+# -----------------------------------------------------------------------------
+# MPEG-TS
+# -----------------------------------------------------------------------------
 	# mpeg-ts publish
 	location /livestream/publish {
 		ts;
-		ts_hls path=/usr/local/es/livestream/hls/from_mpegts segment=5s:20s;
-		ts_dash path=/usr/local/es/livestream/dash/from_mpegts segment=5s:20s;
+		ts_hls path=/usr/local/es/livestream/hls/from_mpegts;
+		ts_dash path=/usr/local/es/livestream/dash/from_mpegts;
 		client_max_body_size 0;
 	}
-
+# -----------------------------------------------------------------------------
+# HLS
+# -----------------------------------------------------------------------------
 	# hls play
 	location ~ /livestream/hls/(.+)$ {
 		try_files /hls/from_mpegts/$1 /hls/from_rtmp/$1;
@@ -51,7 +55,9 @@ server {
 		add_header X-Node "hls_from_rtmp";
 		add_header X-Worker $pid;
 	}
-
+# -----------------------------------------------------------------------------
+# DASH
+# -----------------------------------------------------------------------------
 	# dash play
 	location ~ /livestream/dash/(.+)$ {
 		try_files /dash/from_mpegts/$1 /dash/from_rtmp/$1;
@@ -86,7 +92,9 @@ server {
 		add_header X-Node "dash_from_rtmp";
 		add_header X-Worker $pid;
 	}
-
+# -----------------------------------------------------------------------------
+# RTMP STATUS
+# -----------------------------------------------------------------------------
 	# rtmp_stat view
 	location ~* /livestream/(rtmp_stat|stat|status)$ {
 		rtmp_stat all;
@@ -105,7 +113,9 @@ server {
 		add_header X-Node "rmtp_stat_xls";
 		add_header X-Worker $pid;
 	}
-
+# -----------------------------------------------------------------------------
+# UNRELATED
+# -----------------------------------------------------------------------------
 	# deny others
 	location / {
 		deny all;
