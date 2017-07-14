@@ -12,5 +12,8 @@ if (!preg_match('/^[a-zA-Z0-9_-]+$/', $channel)) {
 <video data-dashjs-player width="512" height="288" controls autoplay
    src="/livestream/dash/<?=$channel?>/index.mpd">
 </video>
+
+<br/><br/>
+<a href="/livestream/hlsplayer/<?=$channel?>">switch to HLS player</a>
 </body>
 </html>
