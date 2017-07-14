@@ -46,20 +46,6 @@ bash es es-livestream
 Available templates
 ===================
 
-es-base
--------
-
-Install only a containerized Debian Stretch.
-
-### To install es-base
-
-```bash
-wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
-bash es es-base
-```
-
----
-
 es-livestream
 -------------
 
@@ -117,6 +103,20 @@ bash es es-livestream
 -  [videojs-contrib-hls] (https://github.com/videojs/videojs-contrib-hls)
 
 -  [dash.js] (https://github.com/Dash-Industry-Forum/dash.js/)
+
+---
+
+es-base
+-------
+
+Install only a containerized Debian Stretch.
+
+### To install es-base
+
+```bash
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+bash es es-base
+```
 
 ---
 
