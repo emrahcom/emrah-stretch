@@ -66,7 +66,7 @@ Install a ready-to-use live streaming media system.
 ### To install es-livestream
 
 ```bash
-wget https://raw.githubusercontent.com/emrahcom/emrah-jessie/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
 bash es es-livestream
 ```
 
