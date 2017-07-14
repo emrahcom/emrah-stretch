@@ -111,6 +111,8 @@ lxc-attach -n $MACH -- \
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
 cp etc/nginx/nginx.conf $ROOTFS/etc/nginx/
+cp etc/nginx/access_list_http.conf $ROOTFS/etc/nginx/
+cp etc/nginx/access_list_rtmp.conf $ROOTFS/etc/nginx/
 cp etc/nginx/conf.d/custom.conf $ROOTFS/etc/nginx/conf.d/
 cp etc/nginx/sites-available/default $ROOTFS/etc/nginx/sites-available/
 
