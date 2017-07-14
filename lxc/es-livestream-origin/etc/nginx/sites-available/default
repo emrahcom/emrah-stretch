@@ -19,106 +19,7 @@ server {
 		ts_dash path=/usr/local/es/livestream/dash/from_mpegts;
 		client_max_body_size 0;
 	}
-# -----------------------------------------------------------------------------
-# HLS
-# -----------------------------------------------------------------------------
-	# hls play
-	location ~ /livestream/hls/(.+)$ {
-		try_files /hls/from_mpegts/$1 /hls/from_rtmp/$1;
 
-		types {
-			application/x-mpegURL m3u8;
-			video/MP2T ts;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "hls";
-		add_header X-Worker $pid;
-	}
-
-	# hls from MPEG-TS
-	location /hls/from_mpegts {
-		alias /usr/local/es/livestream/hls/from_mpegts;
-
-		types {
-			application/x-mpegURL m3u8;
-			video/MP2T ts;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "hls_from_mpegts";
-		add_header X-Worker $pid;
-	}
-
-	# hls from RTMP
-	location /hls/from_rtmp {
-		alias /usr/local/es/livestream/hls/from_rtmp;
-
-		types {
-			application/x-mpegURL m3u8;
-			video/MP2T ts;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "hls_from_rtmp";
-		add_header X-Worker $pid;
-	}
-# -----------------------------------------------------------------------------
-# DASH
-# -----------------------------------------------------------------------------
-	# dash play
-	location ~ /livestream/dash/(.+)$ {
-		try_files /dash/from_mpegts/$1 /dash/from_rtmp/$1;
-
-		types {
-			application/dash+xml mpd;
-			video/mp4 mp4;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "dash";
-		add_header X-Worker $pid;
-	}
-
-	# dash from MPEG-TS
-	location /dash/from_mpegts {
-		alias /usr/local/es/livestream/dash/from_mpegts;
-
-		types {
-			application/dash+xml mpd;
-			video/mp4 mp4;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "dash_from_mpegts";
-		add_header X-Worker $pid;
-	}
-
-	# dash from RTMP
-	location /dash/from_rtmp {
-		alias /usr/local/es/livestream/dash/from_rtmp;
-
-		types {
-			application/dash+xml mpd;
-			video/mp4 mp4;
-		}
-
-		add_header Access-Control-Allow-Origin *;
-		add_header Cache-Control no-cache;
-		add_header X-Host $host;
-		add_header X-Node "dash_from_rtmp";
-		add_header X-Worker $pid;
-	}
 # -----------------------------------------------------------------------------
 # RTMP STATUS
 # -----------------------------------------------------------------------------
@@ -126,20 +27,15 @@ server {
 	location ~* /livestream/(rtmp_stat|stat|status)$ {
 		rtmp_stat all;
 		rtmp_stat_stylesheet rtmp_stat.xsl;
-
-		add_header X-Host $host;
 		add_header X-Node "rmtp_stat";
-		add_header X-Worker $pid;
 	}
 
 	# rtmp_stat.xsl view
 	location /livestream/rtmp_stat.xsl {
 		alias /usr/local/es/livestream/stat/rtmp_stat.xsl;
-
-		add_header X-Host $host;
 		add_header X-Node "rmtp_stat_xls";
-		add_header X-Worker $pid;
 	}
+
 # -----------------------------------------------------------------------------
 # UNRELATED
 # -----------------------------------------------------------------------------
