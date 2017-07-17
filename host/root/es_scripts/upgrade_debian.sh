@@ -1,4 +1,4 @@
 #!/bin/bash
 
-apt update && apt autoclean && apt -dy dist-upgrade && \
-    apt dist-upgrade && apt autoremove --purge
+apt update && apt autoclean && apt -dy full-upgrade && \
+    apt full-upgrade && apt autoremove --purge

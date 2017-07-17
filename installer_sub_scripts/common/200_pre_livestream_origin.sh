@@ -37,7 +37,7 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "apt $APT_PROXY_OPTION update
-     apt $APT_PROXY_OPTION -y dist-upgrade"
+     apt $APT_PROXY_OPTION -y full-upgrade"
 
 # packages
 lxc-attach -n $MACH -- \

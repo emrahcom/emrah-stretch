@@ -67,7 +67,7 @@ lxc-wait -n $MACH -s RUNNING
 # -----------------------------------------------------------------------------
 # update
 lxc-attach -n $MACH -- apt $APT_PROXY_OPTION update
-lxc-attach -n $MACH -- apt $APT_PROXY_OPTION -y dist-upgrade
+lxc-attach -n $MACH -- apt $APT_PROXY_OPTION -y full-upgrade
 
 # packages
 lxc-attach -n $MACH -- apt $APT_PROXY_OPTION -y install zsh
