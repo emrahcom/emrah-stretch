@@ -24,5 +24,5 @@ EOF
 # save ruleset
 # 
 nft list ruleset -nn | \
-    sed 's/^\(.* dnat to\).*"FIXME missing port2ip"/\1 tcp dport map @port2ip : tcp dport map @port2port comment "FIXME missing port2ip"/' \
+    sed 's/^\(.* dnat to\).*"ES-MARK dont touch here"/\1 tcp dport map @port2ip : tcp dport map @port2port comment "ES-MARK dont touch here"/' \
     >> /etc/nftables.conf

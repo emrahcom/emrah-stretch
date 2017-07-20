@@ -79,7 +79,7 @@ nft add map ip es-nat port2port \
 nft add rule ip es-nat prerouting \
     iif $PUBLIC_INTERFACE dnat \
     tcp dport map @port2ip : tcp dport map @port2port \
-    comment \"FIXME missing port2ip\"
+    comment \"ES-MARK dont touch here\"
 
 # -----------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
