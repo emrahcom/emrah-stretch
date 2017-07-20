@@ -17,11 +17,21 @@ echo COMPILER="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
-EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-[ -n "$EXISTS" -a "$REINSTALL_COMPILER_IF_EXISTS" != true ] && exit
-
 echo
 echo "-------------------------- $MACH --------------------------"
+
+# -----------------------------------------------------------------------------
+# NFTABLES RULES
+# -----------------------------------------------------------------------------
+# public ssh
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
+
+# -----------------------------------------------------------------------------
+# REINSTALL_IF_EXISTS
+# -----------------------------------------------------------------------------
+EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
+[ -n "$EXISTS" -a "$REINSTALL_COMPILER_IF_EXISTS" != true ] && exit
 
 # -----------------------------------------------------------------------------
 # CONTAINER SETUP
@@ -91,13 +101,6 @@ lxc-attach -n $MACH -- \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install dpkg-dev build-essential git
      apt $APT_PROXY_OPTION -y install fakeroot unzip"
-
-# -----------------------------------------------------------------------------
-# NFTABLES RULES
-# -----------------------------------------------------------------------------
-# public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES

@@ -17,6 +17,19 @@ echo STRETCH="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
+echo
+echo "-------------------------- $MACH --------------------------"
+
+# -----------------------------------------------------------------------------
+# NFTABLES RULES
+# -----------------------------------------------------------------------------
+# public ssh
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
+
+# -----------------------------------------------------------------------------
+# REINSTALL_IF_EXISTS
+# -----------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
 if [ -n "$EXISTS" -a "$REINSTALL_STRETCH_IF_EXISTS" != true ]
 then
@@ -24,9 +37,6 @@ then
         $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
     exit
 fi
-
-echo
-echo "-------------------------- $MACH --------------------------"
 
 # -----------------------------------------------------------------------------
 # CONTAINER SETUP
@@ -104,13 +114,6 @@ cp root/es_scripts/update_debian.sh $ROOTFS/root/es_scripts/
 cp root/es_scripts/upgrade_debian.sh $ROOTFS/root/es_scripts/
 chmod 744 $ROOTFS/root/es_scripts/update_debian.sh
 chmod 744 $ROOTFS/root/es_scripts/upgrade_debian.sh
-
-# -----------------------------------------------------------------------------
-# NFTABLES RULES
-# -----------------------------------------------------------------------------
-# public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
