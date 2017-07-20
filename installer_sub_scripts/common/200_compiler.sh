@@ -17,6 +17,9 @@ echo COMPILER="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
+EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
+[ -n "$EXISTS" -a "$REINSTALL_COMPILER_IF_EXISTS" != true ] && exit
+
 echo
 echo "-------------------------- $MACH --------------------------"
 
