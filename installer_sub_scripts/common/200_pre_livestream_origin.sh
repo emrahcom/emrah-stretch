@@ -3,13 +3,17 @@
 # -----------------------------------------------------------------------------
 set -e
 source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
-[ "$DONT_RUN_PRE_LIVESTREAM_ORIGIN" = true ] && exit
+
+# -----------------------------------------------------------------------------
+# ENVIRONMENT
+# -----------------------------------------------------------------------------
+MACH="es-compiler"
+ROOTFS="/var/lib/lxc/$MACH/rootfs"
 
 # -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
-MACH="es-compiler"
-ROOTFS="/var/lib/lxc/$MACH/rootfs"
+[ "$DONT_RUN_PRE_LIVESTREAM_ORIGIN" = true ] && exit
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
 echo

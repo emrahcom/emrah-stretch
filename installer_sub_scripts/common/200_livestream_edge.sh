@@ -3,10 +3,9 @@
 # -----------------------------------------------------------------------------
 set -e
 source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
-[ "$DONT_RUN_LIVESTREAM_EDGE" = true ] && exit
 
 # -----------------------------------------------------------------------------
-# INIT
+# ENVIRONMENT
 # -----------------------------------------------------------------------------
 MACH="es-livestream-edge"
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
@@ -15,6 +14,11 @@ IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo LIVESTREAM_EDGE="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
+
+# -----------------------------------------------------------------------------
+# INIT
+# -----------------------------------------------------------------------------
+[ "$DONT_RUN_LIVESTREAM_EDGE" = true ] && exit
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
 echo

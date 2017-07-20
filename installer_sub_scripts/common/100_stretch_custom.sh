@@ -3,13 +3,17 @@
 # -----------------------------------------------------------------------------
 set -e
 source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
-[ "$DONT_RUN_STRETCH_CUSTOM" = true ] && exit
+
+# -----------------------------------------------------------------------------
+# ENVIRONMENT
+# -----------------------------------------------------------------------------
+MACH="es-stretch"
+ROOTFS="/var/lib/lxc/$MACH/rootfs"
 
 # -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
-MACH="es-stretch"
-ROOTFS="/var/lib/lxc/$MACH/rootfs"
+[ "$DONT_RUN_STRETCH_CUSTOM" = true ] && exit
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
 echo
