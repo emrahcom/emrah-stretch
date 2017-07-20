@@ -57,7 +57,7 @@ apt $APT_PROXY_OPTION -y upgrade
 # added packages
 apt $APT_PROXY_OPTION -y install nftables
 apt $APT_PROXY_OPTION -y install lxc debootstrap bridge-utils
-apt $APT_PROXY_OPTION -y install openntpd dnsmasq
+apt $APT_PROXY_OPTION -y install dnsmasq
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION

@@ -28,12 +28,17 @@ apt $APT_PROXY_OPTION -y install zsh tmux vim
 apt $APT_PROXY_OPTION -y install htop iotop bmon bwm-ng
 apt $APT_PROXY_OPTION -y install iputils-ping fping wget curl whois dnsutils
 apt $APT_PROXY_OPTION -y install bzip2 rsync ack-grep
+apt $APT_PROXY_OPTION -y install openntpd
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
 # changed/added system files
 cp ../../host/etc/cron.d/es_update /etc/cron.d/
+cp ../../host/etc/default/openntpd /etc/default/
+
+# openntpd
+systemctl restart openntpd.service
 
 # -----------------------------------------------------------------------------
 # ROOT USER
