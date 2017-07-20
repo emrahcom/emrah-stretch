@@ -11,7 +11,7 @@ set -e
 [ "$DONT_RUN_POST_INSTALL" = true ] && exit
 
 # -----------------------------------------------------------------------------
-# SAVE RULES
+# NFTABLES
 # -----------------------------------------------------------------------------
 # recreate nftables.conf
 cat <<EOF > /etc/nftables.conf

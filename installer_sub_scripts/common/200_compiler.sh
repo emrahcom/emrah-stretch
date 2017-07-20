@@ -16,6 +16,13 @@ echo COMPILER="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
+# NFTABLES RULES
+# -----------------------------------------------------------------------------
+# public ssh
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
+
+# -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
 [ "$DONT_RUN_COMPILER" = true ] && exit
@@ -23,13 +30,6 @@ cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
 echo
 echo "-------------------------- $MACH --------------------------"
-
-# -----------------------------------------------------------------------------
-# NFTABLES RULES
-# -----------------------------------------------------------------------------
-# public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
 
 # -----------------------------------------------------------------------------
 # REINSTALL_IF_EXISTS

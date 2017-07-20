@@ -16,6 +16,16 @@ echo LIVESTREAM_EDGE="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
+# NFTABLES RULES
+# -----------------------------------------------------------------------------
+# public ssh
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
+# http
+nft add element es-nat port2ip { 80 : $IP }
+nft add element es-nat port2port { 80 : 80 }
+
+# -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
 [ "$DONT_RUN_LIVESTREAM_EDGE" = true ] && exit
@@ -104,16 +114,6 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "chown www-data: /usr/local/es/livestream/hlsplayer -R
      chown www-data: /usr/local/es/livestream/dashplayer -R"
-
-# -----------------------------------------------------------------------------
-# NFTABLES RULES
-# -----------------------------------------------------------------------------
-# public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
-# http
-nft add element es-nat port2ip { 80 : $IP }
-nft add element es-nat port2port { 80 : 80 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES

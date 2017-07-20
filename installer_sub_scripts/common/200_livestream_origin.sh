@@ -16,6 +16,19 @@ echo LIVESTREAM_ORIGIN="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
+# NFTABLES RULES
+# -----------------------------------------------------------------------------
+# public ssh
+nft add element es-nat port2ip { $SSH_PORT : $IP }
+nft add element es-nat port2port { $SSH_PORT : 22 }
+# rtmp push
+nft add element es-nat port2ip { 1935 : $IP }
+nft add element es-nat port2port { 1935 : 1935 }
+# mpeg-ts push
+nft add element es-nat port2ip { 8000 : $IP }
+nft add element es-nat port2port { 8000 : 80 }
+
+# -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
 [ "$DONT_RUN_LIVESTREAM_ORIGIN" = true ] && exit
@@ -125,19 +138,6 @@ cp root/es_scripts/livestream_test.sh $ROOTFS/root/es_scripts/
 chmod u+x $ROOTFS/root/es_scripts/livestream_cleanup.sh
 chmod u+x $ROOTFS/root/es_scripts/livestream_test.sh
 cp etc/cron.d/es_livestream_cleanup $ROOTFS/etc/cron.d/
-
-# -----------------------------------------------------------------------------
-# NFTABLES RULES
-# -----------------------------------------------------------------------------
-# public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
-# rtmp push
-nft add element es-nat port2ip { 1935 : $IP }
-nft add element es-nat port2port { 1935 : 1935 }
-# mpeg-ts push
-nft add element es-nat port2ip { 8000 : $IP }
-nft add element es-nat port2port { 8000 : 80 }
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
