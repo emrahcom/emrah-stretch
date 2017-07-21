@@ -16,6 +16,9 @@ Table of contents
         - [To install es-livestream](#to-install-es-livestream)
         - [After install es-livestream](#after-install-es-livestream)
         - [Related links to es-livestream](#related-links-to-es-livestream)
+    - [es-ring-node](#es-ring-node)
+        - [To install es-ring-node](#to-install-es-ring-node)
+        - [Related links to es-ring-node](#related-links-to-es-ring-node)
     - [es-base](#es-base)
         - [To install es-base](#to-install-es-base)
 - [Requirements](#requirements)
@@ -103,6 +106,26 @@ bash es es-livestream
 -  [videojs-contrib-hls] (https://github.com/videojs/videojs-contrib-hls)
 
 -  [dash.js] (https://github.com/Dash-Industry-Forum/dash.js/)
+
+---
+
+es-ring-node
+-------------
+
+Install a ready-to-use public Ring node.
+
+### To install es-ring-node
+
+```bash
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+bash es es-ring-node
+```
+
+### Related links to es-ring-node
+
+-  [OpenDHT] (https://github.com/savoirfairelinux/opendht)
+
+-  [Ring] (https://ring.cx/)
 
 ---
 
