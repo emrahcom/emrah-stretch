@@ -100,15 +100,22 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "cd /usr/local/es/share/es-ring-node/source/opendht/build
-     make install"
+     make install
+
+     cp ../tools/systemd/dhtnode.conf /etc/
+     cp tools/systemd/*.service /etc/systemd/system/"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
+cp etc/dhtnode.conf $ROOTFS/etc/
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
+lxc-attach -n $MACH -- systemctl daemon-reload
+lxc-attach -n $MACH -- systemctl enable dhtnode.service
+
 lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
 lxc-start -n $MACH -d
