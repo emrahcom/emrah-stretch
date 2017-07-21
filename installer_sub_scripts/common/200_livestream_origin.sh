@@ -19,14 +19,14 @@ echo LIVESTREAM_ORIGIN="$IP" >> \
 # NFTABLES RULES
 # -----------------------------------------------------------------------------
 # public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
+nft add element es-nat tcp2ip { $SSH_PORT : $IP }
+nft add element es-nat tcp2port { $SSH_PORT : 22 }
 # rtmp push
-nft add element es-nat port2ip { 1935 : $IP }
-nft add element es-nat port2port { 1935 : 1935 }
+nft add element es-nat tcp2ip { 1935 : $IP }
+nft add element es-nat tcp2port { 1935 : 1935 }
 # mpeg-ts push
-nft add element es-nat port2ip { 8000 : $IP }
-nft add element es-nat port2port { 8000 : 80 }
+nft add element es-nat tcp2ip { 8000 : $IP }
+nft add element es-nat tcp2port { 8000 : 80 }
 
 # -----------------------------------------------------------------------------
 # INIT

@@ -19,11 +19,11 @@ echo LIVESTREAM_EDGE="$IP" >> \
 # NFTABLES RULES
 # -----------------------------------------------------------------------------
 # public ssh
-nft add element es-nat port2ip { $SSH_PORT : $IP }
-nft add element es-nat port2port { $SSH_PORT : 22 }
+nft add element es-nat tcp2ip { $SSH_PORT : $IP }
+nft add element es-nat tcp2port { $SSH_PORT : 22 }
 # http
-nft add element es-nat port2ip { 80 : $IP }
-nft add element es-nat port2port { 80 : 80 }
+nft add element es-nat tcp2ip { 80 : $IP }
+nft add element es-nat tcp2port { 80 : 80 }
 
 # -----------------------------------------------------------------------------
 # INIT

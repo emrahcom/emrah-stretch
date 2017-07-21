@@ -71,15 +71,25 @@ nft add chain ip es-nat postrouting \
 nft add rule ip es-nat postrouting \
     ip saddr 172.22.22.0/24 masquerade
 
-# dnat maps
-nft add map ip es-nat port2ip \
+# dnat tcp maps
+nft add map ip es-nat tcp2ip \
     { type inet_service : ipv4_addr \; }
-nft add map ip es-nat port2port \
+nft add map ip es-nat tcp2port \
     { type inet_service : inet_service \; }
 nft add rule ip es-nat prerouting \
     iif $PUBLIC_INTERFACE dnat \
-    tcp dport map @port2ip : tcp dport map @port2port \
-    comment \"ES-MARK dont touch here\"
+    tcp dport map @tcp2ip : tcp dport map @tcp2port \
+    comment \"ES-MARK-TCP dont touch here\"
+
+# dnat udp maps
+nft add map ip es-nat udp2ip \
+    { type inet_service : ipv4_addr \; }
+nft add map ip es-nat udp2port \
+    { type inet_service : inet_service \; }
+nft add rule ip es-nat prerouting \
+    iif $PUBLIC_INTERFACE dnat \
+    udp dport map @udp2ip : udp dport map @udp2port \
+    comment \"ES-MARK-UDP dont touch here\"
 
 # -----------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
