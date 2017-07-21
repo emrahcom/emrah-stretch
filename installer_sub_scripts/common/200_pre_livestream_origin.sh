@@ -56,8 +56,8 @@ RTMP="https://github.com/arut/nginx-rtmp-module/archive/master.zip"
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
-     mkdir -p /root/source
-     cd /root/source
+     mkdir -p /usr/local/es/share/source
+     cd /usr/local/es/share/source
      setopt +o nomatch
      rm -rf nginx_* nginx-* libnginx-mod-*
      apt $APT_PROXY_OPTION source nginx
@@ -70,7 +70,7 @@ lxc-attach -n $MACH -- \
 
 lxc-attach -n $MACH -- \
     zsh -c \
-    'cd /root/source
+    'cd /usr/local/es/share/source
      NGINX_VERSION=$(ls nginx-[1-9].* -d)
      mv nginx-ts-module-master $NGINX_VERSION/debian/modules/nginx-ts-module
      mv nginx-rtmp-module-master \

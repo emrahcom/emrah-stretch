@@ -89,12 +89,13 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
+     apt $APT_PROXY_OPTION -y install make cmake
      apt $APT_PROXY_OPTION -y install libargon2-0"
 
 # opendht
 lxc-attach -n $MACH -- \
     zsh -c \
-    "cd /usr/local/es/share/opendht-build
+    "cd /usr/local/es/share/source/opendht/build
      make install"
 
 # -----------------------------------------------------------------------------

@@ -48,8 +48,8 @@ lxc-attach -n $MACH -- \
 REPO="https://github.com/savoirfairelinux/opendht.git"
 lxc-attach -n $MACH -- \
     zsh -c \
-    "mkdir -p /root/source
-     cd /root/source
+    "mkdir -p /usr/local/es/share/source
+     cd /usr/local/es/share/source
      rm -rf opendht
      git clone $REPO
      cd opendht
@@ -58,11 +58,7 @@ lxc-attach -n $MACH -- \
      cd build
      cmake .. -DOPENDHT_PYTHON=ON -DOPENDHT_SYSTEMD=ON \
          -DCMAKE_INSTALL_PREFIX=/usr
-     make -j4
-     cd ..
-     
-     rm -rf  /usr/local/es/share/opendht-build
-     mv build /usr/local/es/share/opendht-build"
+     make -j4"
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
