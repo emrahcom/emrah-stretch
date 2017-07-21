@@ -97,15 +97,15 @@ bash es es-livestream
 
 ### Related links to es-livestream
 
--  [nginx-ts-module] (https://github.com/arut/nginx-ts-module)
+-  [nginx-ts-module](https://github.com/arut/nginx-ts-module)
 
--  [nginx-rtmp-module] (https://github.com/arut/nginx-rtmp-module)
+-  [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module)
 
--  [video.js] (https://github.com/videojs/video.js)
+-  [video.js](https://github.com/videojs/video.js)
 
--  [videojs-contrib-hls] (https://github.com/videojs/videojs-contrib-hls)
+-  [videojs-contrib-hls](https://github.com/videojs/videojs-contrib-hls)
 
--  [dash.js] (https://github.com/Dash-Industry-Forum/dash.js/)
+-  [dash.js](https://github.com/Dash-Industry-Forum/dash.js/)
 
 ---
 
@@ -123,9 +123,9 @@ bash es es-ring-node
 
 ### Related links to es-ring-node
 
--  [OpenDHT] (https://github.com/savoirfairelinux/opendht)
+-  [OpenDHT](https://github.com/savoirfairelinux/opendht)
 
--  [Ring] (https://ring.cx/)
+-  [Ring](https://ring.cx/)
 
 ---
 
