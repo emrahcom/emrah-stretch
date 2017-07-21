@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# COMPILER.SH
+# RING_NODE.SH
 # -----------------------------------------------------------------------------
 set -e
 source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
@@ -7,12 +7,12 @@ source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 # -----------------------------------------------------------------------------
 # ENVIRONMENT
 # -----------------------------------------------------------------------------
-MACH="es-compiler"
+MACH="es-ring-node"
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/es_hosts | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo COMPILER="$IP" >> \
+echo LIVESTREAM_ORIGIN="$IP" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
@@ -25,17 +25,11 @@ nft add element es-nat port2port { $SSH_PORT : 22 }
 # -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
-[ "$DONT_RUN_COMPILER" = true ] && exit
+[ "$DONT_RUN_RING_NODE" = true ] && exit
 cd $BASEDIR/$GIT_LOCAL_DIR/lxc/$MACH
 
 echo
 echo "-------------------------- $MACH --------------------------"
-
-# -----------------------------------------------------------------------------
-# REINSTALL_IF_EXISTS
-# -----------------------------------------------------------------------------
-EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-[ -n "$EXISTS" -a "$REINSTALL_COMPILER_IF_EXISTS" != true ] && exit
 
 # -----------------------------------------------------------------------------
 # CONTAINER SETUP
@@ -51,31 +45,23 @@ set -e
 # create the new one
 lxc-copy -n es-stretch -N $MACH -p /var/lib/lxc/
 
-# shared directories
-mkdir -p $SHARED
-cp -arp $BASEDIR/$GIT_LOCAL_DIR/host/usr/local/es/deb $SHARED/
-cp -arp $BASEDIR/$GIT_LOCAL_DIR/host/usr/local/es/share $SHARED/
-
 # container config
 rm -rf $ROOTFS/var/cache/apt/archives
 mkdir -p $ROOTFS/var/cache/apt/archives
-rm -rf $ROOTFS/usr/local/es/deb
-mkdir -p $ROOTFS/usr/local/es/deb
 rm -rf $ROOTFS/usr/local/es/share
 mkdir -p $ROOTFS/usr/local/es/share
 sed -i '/\/var\/cache\/apt\/archives/d' /var/lib/lxc/$MACH/config
 sed -i '/lxc\.network\./d' /var/lib/lxc/$MACH/config
 cat >> /var/lib/lxc/$MACH/config <<EOF
 
-#lxc.start.auto = 1
-lxc.start.order = 100
+lxc.start.auto = 1
+lxc.start.order = 600
 lxc.start.delay = 2
 lxc.group = es-group
-#lxc.group = onboot
+lxc.group = onboot
 
 lxc.mount.entry = /var/cache/apt/archives \
 $ROOTFS/var/cache/apt/archives none bind 0 0
-lxc.mount.entry = $SHARED/deb $ROOTFS/usr/local/es/deb none bind 0 0
 lxc.mount.entry = $SHARED/share $ROOTFS/usr/local/es/share none bind 0 0
 
 lxc.network.type = veth
@@ -103,11 +89,22 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
-     apt $APT_PROXY_OPTION -y install dpkg-dev build-essential cmake git
-     apt $APT_PROXY_OPTION -y install fakeroot unzip"
+     apt $APT_PROXY_OPTION -y install libargon2-0"
+
+# opendht
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "cd /usr/local/es/share/opendht-build
+     make install"
+
+# -----------------------------------------------------------------------------
+# SYSTEM CONFIGURATION
+# -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
 lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
+lxc-start -n $MACH -d
+lxc-wait -n $MACH -s RUNNING

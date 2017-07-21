@@ -1,0 +1,1 @@
+../common/200_ring_node.sh

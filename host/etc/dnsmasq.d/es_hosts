@@ -3,3 +3,4 @@ address=/es-stretch/172.22.22.254
 address=/es-compiler/172.22.22.10
 address=/es-livestream-origin/172.22.22.11
 address=/es-livestream-edge/172.22.22.12
+address=/es-ring-node/172.22.22.13
