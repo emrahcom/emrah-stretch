@@ -90,7 +90,8 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install make cmake
-     apt $APT_PROXY_OPTION -y install libargon2-0"
+     apt $APT_PROXY_OPTION -y install libargon2-0
+     apt $APT_PROXY_OPTION -y install python3-setuptools cython3"
 
 # opendht
 lxc-attach -n $MACH -- \
