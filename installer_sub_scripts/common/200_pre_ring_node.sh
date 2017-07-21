@@ -48,8 +48,8 @@ lxc-attach -n $MACH -- \
 REPO="https://github.com/savoirfairelinux/opendht.git"
 lxc-attach -n $MACH -- \
     zsh -c \
-    "mkdir -p /usr/local/es/share/source
-     cd /usr/local/es/share/source
+    "mkdir -p /usr/local/es/share/es-ring-node/source
+     cd /usr/local/es/share/es-ring-node/source
      rm -rf opendht
      git clone $REPO
      cd opendht

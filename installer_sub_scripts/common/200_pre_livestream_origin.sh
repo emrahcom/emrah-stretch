@@ -56,8 +56,8 @@ RTMP="https://github.com/arut/nginx-rtmp-module/archive/master.zip"
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
-     mkdir -p /usr/local/es/share/source
-     cd /usr/local/es/share/source
+     mkdir -p /usr/local/es/share/es-livestream-origin/source
+     cd /usr/local/es/share/es-livestream-origin/source
      setopt +o nomatch
      rm -rf nginx_* nginx-* libnginx-mod-*
      apt $APT_PROXY_OPTION source nginx
@@ -70,7 +70,7 @@ lxc-attach -n $MACH -- \
 
 lxc-attach -n $MACH -- \
     zsh -c \
-    'cd /usr/local/es/share/source
+    'cd /usr/local/es/share/es-livestream-origin/source
      NGINX_VERSION=$(ls nginx-[1-9].* -d)
      mv nginx-ts-module-master $NGINX_VERSION/debian/modules/nginx-ts-module
      mv nginx-rtmp-module-master \
@@ -87,10 +87,10 @@ lxc-attach -n $MACH -- \
      dpkg-buildpackage -rfakeroot -uc -b
 
      cd ..
-     mkdir -p /usr/local/es/deb/livestream-origin
-     rm -f /usr/local/es/deb/livestream-origin/libnginx-*.deb
-     rm -f /usr/local/es/deb/livestream-origin/nginx-*.deb
-     mv libnginx-*.deb nginx-*.deb /usr/local/es/deb/livestream-origin/'
+     mkdir -p /usr/local/es/deb/es-livestream-origin
+     rm -f /usr/local/es/deb/es-livestream-origin/libnginx-*.deb
+     rm -f /usr/local/es/deb/es-livestream-origin/nginx-*.deb
+     mv libnginx-*.deb nginx-*.deb /usr/local/es/deb/es-livestream-origin/'
 
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES

@@ -95,7 +95,7 @@ lxc-attach -n $MACH -- \
 # opendht
 lxc-attach -n $MACH -- \
     zsh -c \
-    "cd /usr/local/es/share/source/opendht/build
+    "cd /usr/local/es/share/es-ring-node/source/opendht/build
      make install"
 
 # -----------------------------------------------------------------------------

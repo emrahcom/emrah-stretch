@@ -113,10 +113,10 @@ lxc-attach -n $MACH -- \
      apt $APT_PROXY_OPTION -y install ffmpeg
      apt $APT_PROXY_OPTION -y install libgd3 libluajit-5.1-2 libxslt1.1 \
          libhiredis0.13
-     dpkg -i /usr/local/es/deb/livestream-origin/nginx-common_*.deb
-     dpkg -i /usr/local/es/deb/livestream-origin/libnginx-mod-*.deb
-     dpkg -i /usr/local/es/deb/livestream-origin/nginx-extras_*.deb
-     dpkg -i /usr/local/es/deb/livestream-origin/nginx-doc_*.deb
+     dpkg -i /usr/local/es/deb/es-livestream-origin/nginx-common_*.deb
+     dpkg -i /usr/local/es/deb/es-livestream-origin/libnginx-mod-*.deb
+     dpkg -i /usr/local/es/deb/es-livestream-origin/nginx-extras_*.deb
+     dpkg -i /usr/local/es/deb/es-livestream-origin/nginx-doc_*.deb
      apt-mark hold nginx-common nginx-extras nginx-doc
 
      mkdir -p /usr/local/es/livestream/stat/
