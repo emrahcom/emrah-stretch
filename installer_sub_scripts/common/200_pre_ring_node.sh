@@ -41,8 +41,8 @@ lxc-attach -n $MACH -- \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install libncurses5-dev libreadline-dev \
          nettle-dev libgnutls28-dev
-     apt $APT_PROXY_OPTION -y libargon2-0-dev libmsgpack-dev
-     apt $APT_PROXY_OPTION -y cython3 python3-dev python3-setuptools"
+     apt $APT_PROXY_OPTION -y install libargon2-0-dev libmsgpack-dev
+     apt $APT_PROXY_OPTION -y install cython3 python3-dev python3-setuptools"
 
 # opendht
 REPO="https://github.com/savoirfairelinux/opendht.git"
