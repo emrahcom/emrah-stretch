@@ -56,7 +56,8 @@ lxc-attach -n $MACH -- \
 
      mkdir build
      cd build
-     cmake -DOPENDHT_PYTHON=ON -DCMAKE_INSTALL_PREFIX=/usr ..
+     cmake .. -DOPENDHT_PYTHON=ON -DOPENDHT_SYSTEMD=ON \
+         -DCMAKE_INSTALL_PREFIX=/usr
      make -j4
      cd ..
      
