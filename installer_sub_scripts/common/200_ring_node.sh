@@ -99,7 +99,9 @@ lxc-attach -n $MACH -- \
 # opendht
 lxc-attach -n $MACH -- \
     zsh -c \
-    "cd /usr/local/es/share/es-ring-node/source/opendht/build
+    "ln -s libgnutls.so.30 /usr/lib/x86_64-linux-gnu/libgnutls.so
+
+     cd /usr/local/es/share/es-ring-node/source/opendht/build
      make install
 
      cp ../tools/systemd/dhtnode.conf /etc/
