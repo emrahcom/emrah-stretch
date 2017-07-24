@@ -102,10 +102,7 @@ lxc-attach -n $MACH -- \
     "ln -s libgnutls.so.30 /usr/lib/x86_64-linux-gnu/libgnutls.so
 
      cd /usr/local/es/share/es-ring-node/source/opendht/build
-     make install
-
-     cp ../tools/systemd/dhtnode.conf /etc/
-     cp tools/systemd/*.service /etc/systemd/system/"
+     make install"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
