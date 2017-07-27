@@ -49,8 +49,7 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # -----------------------------------------------------------------------------
 # PACKAGES
 # -----------------------------------------------------------------------------
-# repo update & upgrade
-apt $APT_PROXY_OPTION update
+# upgrade
 apt $APT_PROXY_OPTION -yd full-upgrade
 apt $APT_PROXY_OPTION -y upgrade
 

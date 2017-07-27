@@ -17,8 +17,7 @@ echo "---------------------- HOST CUSTOM ------------------------"
 # -----------------------------------------------------------------------------
 # PACKAGES
 # -----------------------------------------------------------------------------
-# repo update & upgrade
-apt $APT_PROXY_OPTION update
+# upgrade
 apt $APT_PROXY_OPTION -yd full-upgrade
 apt $APT_PROXY_OPTION -y upgrade
 
