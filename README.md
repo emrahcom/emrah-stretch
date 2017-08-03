@@ -78,7 +78,7 @@ bash es es-livestream
 -  `http://<IP_ADDRESS>:8000/livestream/publish/<CHANNEL_NAME>` to push
     an MPEG-TS stream.
 
--  `rtmp://<IP_ADDRESS>/livestream/publish/<CHANNEL_NAME>` to push
+-  `rtmp://<IP_ADDRESS>/livestream/<CHANNEL_NAME>` to push
     an RTMP stream.
 
 -  `http://<IP_ADDRESS>/livestream/hls/<CHANNEL_NAME>/index.m3u8` to pull
