@@ -55,7 +55,7 @@ fi
 
 # If the OS release is unsupported, cancel the installation.
 if [ "$DONT_CHECK_OS_RELEASE" != true \
-     -a -z "$(grep $RELEASE /etc/os-release)" ]
+     -a -z "$(grep "$RELEASE" /etc/os-release)" ]
 then
 	echo
 	echo "ERROR: unsupported OS release"
