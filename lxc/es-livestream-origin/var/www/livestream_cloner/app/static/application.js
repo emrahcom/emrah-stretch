@@ -9,7 +9,7 @@ app = new Vue({
     },
     'created': function () {
         this.load_streams();
-        // c = setInterval(this.load_streams, 5000);
+        c = setInterval(this.load_streams, 5000);
     },
     'methods': {
         'request': function (method, location, headers, data, on_success, on_failed) {
@@ -61,7 +61,8 @@ app = new Vue({
             this.reset_modals();
             application = this;
             this.request('PUT', '/api/', {'Content-Type': 'application/json'}, data,
-                (r) => { application.delete_stream(data); })
+                (r) => { application.request('DELETE', '/api/', {'Content-Type': 'application/json'}, data,
+                            (r) => { application.load_streams(); }) });
         },
         'start_stream': function (name) {
             data = JSON.stringify({'name': name, 'command': 'start'})
@@ -74,8 +75,7 @@ app = new Vue({
                 (r) => { this.load_streams(); })
         },
         'update_stream': function() {
-            data = JSON.stringify({'old_name': this.old_stream_name,
-                                   'new_name': this.new_stream_name ? this.new_stream_name : this.old_name,
+            data = JSON.stringify({'name': this.old_stream_name,
                                    'new_src': encodeURI(this.new_stream_src),
                                    'new_dst': encodeURI(this.new_stream_dst)});
             this.reset_modals();

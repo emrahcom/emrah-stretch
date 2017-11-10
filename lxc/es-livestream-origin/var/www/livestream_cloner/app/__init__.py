@@ -57,9 +57,8 @@ def manage_streaming_api():
 @app.route('/api', methods=['PATCH'])
 @app.route('/api/', methods=['PATCH'])
 def update_stream_api():
-    old_name = request.json.get('old_name')
-    new_name = request.json.get('new_name')
+    name = request.json.get('name')
     new_src = request.json.get('new_src')
     new_dst = request.json.get('new_dst')
-    result = update_stream(old_name, new_name, new_src, new_dst)
+    result = update_stream(name, new_src, new_dst)
     return jsonify({'status': 'OK', 'value': result})

@@ -47,14 +47,13 @@ def remove_stream(name):
     save_stream_list(stream_list)
 
 
-def update_stream(old_name, new_name, new_src, new_dst):
+def update_stream(name, new_src, new_dst):
     stream_list = load_stream_list()
     print(stream_list)
     try:
-        s = [r for r in stream_list if r['name'] == old_name][0]
+        s = [r for r in stream_list if r['name'] == name][0]
     except IndexError:
         return False
-    s['name'] = new_name
     s['src'] = new_src
     s['dst'] = new_dst
     save_stream_list(stream_list)

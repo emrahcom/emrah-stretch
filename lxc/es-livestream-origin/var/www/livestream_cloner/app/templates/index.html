@@ -45,7 +45,7 @@
                         <h4 class="modal-title">Edit Stream</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Stream Name">
+                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Stream Name" readonly>
                         <br>
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_src" placeholder="Stream Source">
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_dst" placeholder="Stream Destination">
@@ -82,7 +82,7 @@
         <div id="stream-list">
             <stream-record v-for="s in streams" :s="s"></stream-record>
         </div>
-        <button id="stream-add-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#stream-add-modal" @click="reset_modals"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;Add Stream</button>
+        <button id="stream-add-button" type="button" class="btn btn-primary btn-block btn-lg" data-toggle="modal" data-target="#stream-add-modal" @click="reset_modals"><span class="glyphicon glyphicon-facetime-video"></span>&nbsp;Add Stream Clone</button>
     </div>
 </body>
 <script src="/static/application.js"></script>
