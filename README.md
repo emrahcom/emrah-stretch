@@ -96,6 +96,7 @@ bash es es-livestream
 -  `http://<IP_ADDRESS>:8000/livestream/status` for the RTMP status page.
 
 -  `http://<IP_ADDRESS>:8000/livestream/cloner` for the stream cloner page.
+   Thanks to [nejdetckenobi](https://github.com/nejdetckenobi)
 
 ### Related links to es-livestream
 
