@@ -40,6 +40,33 @@ server {
 	}
 
 # -----------------------------------------------------------------------------
+# LIVESTREAM CLONER
+# -----------------------------------------------------------------------------
+	# livestream_cloner static files
+	location /static {
+		root /var/www/livestream_cloner/app;
+	}
+
+	# livestream_cloner api
+	location /api {
+		root /var/www/livestream_cloner;
+		try_files $uri @cloner;
+	}
+
+	# livestream_cloner root
+	location /livestream/cloner {
+		root /var/www/livestream_cloner;
+		try_files $uri @cloner;
+	}
+
+	location cloner {
+		expires epoch;
+
+		include uwsgi_params;
+		uwsgi_pass 127.0.0.1:5000;
+	}
+
+# -----------------------------------------------------------------------------
 # UNRELATED
 # -----------------------------------------------------------------------------
 	# deny others
