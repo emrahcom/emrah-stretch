@@ -9,7 +9,7 @@ app = new Vue({
     },
     'created': function () {
         this.load_streams();
-        c = setInterval(this.load_streams, 5000);
+        // c = setInterval(this.load_streams, 5000);
     },
     'methods': {
         'request': function (method, location, headers, data, on_success, on_failed) {
@@ -50,17 +50,18 @@ app = new Vue({
         'reset_modals': function() {
             $("#stream-add-modal").modal('hide');
             $("#stream-edit-modal").modal('hide');
+            $("#deletion-dialog").modal('hide');
             this.$root.old_stream_name = '';
             this.$root.new_stream_name = '';
             this.$root.new_stream_src = '';
             this.$root.new_stream_dst = '';
         },
         'delete_stream': function (name) {
-            sure = confirm('Do you really want to remove "' + name + '" ?');
-            if(!sure) return;
-            data = JSON.stringify({'name': name});
-            this.request('DELETE', '/api/', {'Content-Type': 'application/json'}, data,
-                (r) => { this.load_streams(); })
+            data = JSON.stringify({'name': name, 'command': 'stop'});
+            this.reset_modals();
+            application = this;
+            this.request('PUT', '/api/', {'Content-Type': 'application/json'}, data,
+                (r) => { application.delete_stream(data); })
         },
         'start_stream': function (name) {
             data = JSON.stringify({'name': name, 'command': 'start'})
@@ -92,7 +93,7 @@ app = new Vue({
                     <span class="pull-right">\
                         <button class="btn btn-success" v-show="!s.streaming" @click="$root.start_stream(s.name)"><span class="glyphicon glyphicon-play"></span>&nbsp;Start</button>\
                         <button class="btn btn-danger" v-show="s.streaming" @click="$root.stop_stream(s.name)"><span class="glyphicon glyphicon-stop"></span>&nbsp;Stop</button>\
-                        <button class="btn btn-danger"><span class="glyphicon glyphicon-trash" @click="$root.delete_stream(s.name)"></span></button>\
+                        <button class="btn btn-danger" @click="open_delete_interface"><span class="glyphicon glyphicon-trash" ></span></button>\
                     </span>\
                 </a>\
                 </transition>',
@@ -110,6 +111,11 @@ app = new Vue({
                     this.$root.new_stream_src = this.s.src;
                     this.$root.new_stream_dst = this.s.dst;
                     $('#stream-edit-modal').modal('show');
+                },
+                'open_delete_interface': function() {
+                    this.$root.old_stream_name = this.s.name;
+                    console.log('AHOY "', this.$root.old_stream_name, '"')
+                    $('#deletion-dialog').modal('show');
                 }
             }
         }

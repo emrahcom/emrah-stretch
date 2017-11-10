@@ -63,6 +63,22 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="deletion-dialog" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>This will remove the stream clone from the list. If you want just stop, please use the stop button. <strong>This can not be undone.</strong></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" @click="$root.delete_stream(old_stream_name)"><span class="glyphicon glyphicon-trash"></span>&nbsp;Remove</button>
+                        <button type="button" class="btn btn-default" @click="reset_modals">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="stream-list">
             <stream-record v-for="s in streams" :s="s"></stream-record>
         </div>
