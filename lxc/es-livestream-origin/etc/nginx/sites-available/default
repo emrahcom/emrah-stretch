@@ -59,7 +59,7 @@ server {
 		try_files $uri @cloner;
 	}
 
-	location cloner {
+	location @cloner {
 		expires epoch;
 
 		include uwsgi_params;
