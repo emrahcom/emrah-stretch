@@ -93,7 +93,7 @@ app = new Vue({
                     <span class="pull-right">\
                         <button class="btn btn-success" v-show="!s.streaming" @click="$root.start_stream(s.name)"><span class="glyphicon glyphicon-play"></span>&nbsp;Start</button>\
                         <button class="btn btn-danger" v-show="s.streaming" @click="$root.stop_stream(s.name)"><span class="glyphicon glyphicon-stop"></span>&nbsp;Stop</button>\
-                        <button class="btn btn-danger" @click="open_delete_interface"><span class="glyphicon glyphicon-trash" ></span></button>\
+                        <button class="btn btn-danger" @click="open_delete_interface" :disabled="s.streaming"><span class="glyphicon glyphicon-trash" ></span></button>\
                     </span>\
                 </a>\
                 </transition>',
