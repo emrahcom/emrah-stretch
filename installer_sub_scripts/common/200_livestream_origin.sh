@@ -123,10 +123,26 @@ lxc-attach -n $MACH -- \
      gunzip -c /usr/share/doc/nginx-doc/examples/rtmp_stat.xsl.gz > \
          /usr/local/es/livestream/stat/rtmp_stat.xsl
      chown www-data: /usr/local/es/livestream/stat -R"
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "export DEBIAN_FRONTEND=noninteractive
+     apt $APT_PROXY_OPTION uwsgi uwsgi-plugin-python3
+     apt $APT_PROXY_OPTION --install-recommends -y install python3-pip
+     pip3 install --upgrade pip setuptools
+     pip3 install --upgrade mydaemon
+     pip3 install --upgrade flask"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
+rm -rf /var/www/livestream_cloner
+rsync -aChu var/www/livestream_cloner/ /var/www/livestream_cloner/
+chown www-data:www-data /var/www/livestream_cloner -R
+
+cp etc/uwsgi/apps-available/livestream_cloner.ini /etc/uwsgi/apps-available/
+rm -f /etc/uwsgi/apps-enabled/livestream_cloner.ini
+ln -s ../apps-available/livestream_cloner.ini /etc/uwsgi/apps-enabled/
+
 cp etc/nginx/nginx.conf $ROOTFS/etc/nginx/
 cp etc/nginx/access_list_http.conf $ROOTFS/etc/nginx/
 cp etc/nginx/access_list_rtmp.conf $ROOTFS/etc/nginx/
@@ -142,6 +158,7 @@ cp etc/cron.d/es_livestream_cleanup $ROOTFS/etc/cron.d/
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
+lxc-attach -n $MACH -- systemctl restart uwsgi
 lxc-attach -n $MACH -- systemctl reload nginx
 
 lxc-stop -n $MACH
