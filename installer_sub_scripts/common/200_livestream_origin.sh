@@ -135,13 +135,14 @@ lxc-attach -n $MACH -- \
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
-rm -rf /var/www/livestream_cloner
-rsync -aChu var/www/livestream_cloner/ /var/www/livestream_cloner/
-chown www-data:www-data /var/www/livestream_cloner -R
+rm -rf $ROOTFS/var/www/livestream_cloner
+mkdir -p $ROOTFS/var/www/livestream_cloner
+rsync -aChu var/www/livestream_cloner/ $ROOTFS/var/www/livestream_cloner/
+chown www-data:www-data $ROOTFS/var/www/livestream_cloner -R
 
-cp etc/uwsgi/apps-available/livestream_cloner.ini /etc/uwsgi/apps-available/
-rm -f /etc/uwsgi/apps-enabled/livestream_cloner.ini
-ln -s ../apps-available/livestream_cloner.ini /etc/uwsgi/apps-enabled/
+cp etc/uwsgi/apps-available/livestream_cloner.ini \
+    $ROOTFS/etc/uwsgi/apps-available/
+ln -s ../apps-available/livestream_cloner.ini $ROOTFS/etc/uwsgi/apps-enabled/
 
 cp etc/nginx/nginx.conf $ROOTFS/etc/nginx/
 cp etc/nginx/access_list_http.conf $ROOTFS/etc/nginx/
