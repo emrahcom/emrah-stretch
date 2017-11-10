@@ -17,10 +17,10 @@
             <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Stream</h4>
+                        <h4 class="modal-title">Add Stream Clone</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Stream Name">
+                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Clone Name">
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_src" placeholder="Stream Source">
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_dst" placeholder="Stream Destination">
                     </div>
@@ -42,10 +42,10 @@
             <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Edit Stream</h4>
+                        <h4 class="modal-title">Edit Stream Clone</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Stream Name" readonly>
+                        <input type="text" class="form-control input input-lg" v-model="new_stream_name" placeholder="Clone Name" readonly>
                         <br>
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_src" placeholder="Stream Source">
                         <input type="text" class="form-control input input-lg stream-uri" v-model="new_stream_dst" placeholder="Stream Destination">
@@ -70,7 +70,7 @@
                         <h4 class="modal-title">Are you sure?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>This will remove the stream clone from the list. If you want just stop, please use the stop button. <strong>This can not be undone.</strong></p>
+                        <p>This will remove the stream clone from the list. <strong>This can not be undone.</strong></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" @click="$root.delete_stream(old_stream_name)"><span class="glyphicon glyphicon-trash"></span>&nbsp;Remove</button>
