@@ -126,7 +126,7 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
-     apt $APT_PROXY_OPTION uwsgi uwsgi-plugin-python3
+     apt $APT_PROXY_OPTION -y install uwsgi uwsgi-plugin-python3
      apt $APT_PROXY_OPTION --install-recommends -y install python3-pip
      pip3 install --upgrade pip setuptools
      pip3 install --upgrade mydaemon
