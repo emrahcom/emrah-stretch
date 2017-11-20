@@ -25,9 +25,43 @@ echo HOST="$IP" >> \
 # INIT
 # -----------------------------------------------------------------------------
 [ "$DONT_RUN_NETWORK_INIT" = true ] && exit
+cd $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER
 
 echo
 echo "------------------------- NETWORK --------------------------"
+
+# -----------------------------------------------------------------------------
+# BACKUP & STATUS
+# -----------------------------------------------------------------------------
+OLD_FILES="/root/es_old_files/$DATE"
+mkdir -p $OLD_FILES
+
+# backup the files which will be changed
+[ -f /etc/nftables.conf ] && cp /etc/nftables.conf $OLD_FILES/
+[ -f /etc/network/interfaces ] && cp /etc/network/interfaces $OLD_FILES/
+
+# -----------------------------------------------------------------------------
+# SYSTEM CONFIGURATION
+# -----------------------------------------------------------------------------
+# changed/added system files
+cp ../../host/etc/sysctl.d/es_ip_forward.conf /etc/sysctl.d/
+cp ../../host/etc/network/interfaces.d/es_bridge /etc/network/interfaces.d/
+cp ../../host/etc/dnsmasq.d/es_interface /etc/dnsmasq.d/
+cp ../../host/etc/dnsmasq.d/es_hosts /etc/dnsmasq.d/
+
+sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/network/interfaces.d/es_bridge
+sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/dnsmasq.d/es_interface
+
+[ -z "$(egrep '^source-directory\s*interfaces.d' /etc/network/interfaces || true)" ] && \
+[ -z "$(egrep '^source-directory\s*/etc/network/interfaces.d' /etc/network/interfaces || true)" ] && \
+[ -z "$(egrep '^source\s*interfaces.d/\*' /etc/network/interfaces || true)" ] && \
+[ -z "$(egrep '^source\s*/etc/network/interfaces.d/\*' /etc/network/interfaces || true)" ] && \
+[ -z "$(egrep '^source\s*interfaces.d/es_bridge' /etc/network/interfaces || true)" ] && \
+[ -z "$(egrep '^source\s*/etc/network/interfaces.d/es_bridge' /etc/network/interfaces || true)" ] && \
+echo -e "\nsource /etc/network/interfaces.d/es_bridge" >> /etc/network/interfaces
+
+# sysctl.d
+sysctl -p
 
 # -----------------------------------------------------------------------------
 # NETWORK CONFIG
