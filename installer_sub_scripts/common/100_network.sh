@@ -44,12 +44,7 @@ mkdir -p $OLD_FILES
 # NETWORK CONFIG
 # -----------------------------------------------------------------------------
 # changed/added system files
-cp ../../host/etc/network/interfaces.d/es_bridge /etc/network/interfaces.d/
-cp ../../host/etc/dnsmasq.d/es_interface /etc/dnsmasq.d/
 cp ../../host/etc/dnsmasq.d/es_hosts /etc/dnsmasq.d/
-
-sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/network/interfaces.d/es_bridge
-sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/dnsmasq.d/es_interface
 
 # /etc/network/interfaces
 [ -z "$(egrep '^source-directory\s*interfaces.d' /etc/network/interfaces || true)" ] && \
@@ -73,6 +68,11 @@ BR_EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
 ip link set $BRIDGE up
 IP_EXISTS=$(ip a show dev $BRIDGE | egrep "inet $IP/24" || true)
 [ -z "$IP_EXISTS" ] && ip addr add dev $BRIDGE $IP/24 brd 172.22.22.255
+
+cp ../../host/etc/network/interfaces.d/es_bridge /etc/network/interfaces.d/
+sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/network/interfaces.d/es_bridge
+cp ../../host/etc/dnsmasq.d/es_interface /etc/dnsmasq.d/
+sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/dnsmasq.d/es_interface
 
 # -----------------------------------------------------------------------------
 # NFTABLES
