@@ -41,10 +41,9 @@ mkdir -p $OLD_FILES
 [ -f /etc/network/interfaces ] && cp /etc/network/interfaces $OLD_FILES/
 
 # -----------------------------------------------------------------------------
-# SYSTEM CONFIGURATION
+# NETWORK CONFIG
 # -----------------------------------------------------------------------------
 # changed/added system files
-cp ../../host/etc/sysctl.d/es_ip_forward.conf /etc/sysctl.d/
 cp ../../host/etc/network/interfaces.d/es_bridge /etc/network/interfaces.d/
 cp ../../host/etc/dnsmasq.d/es_interface /etc/dnsmasq.d/
 cp ../../host/etc/dnsmasq.d/es_hosts /etc/dnsmasq.d/
@@ -52,6 +51,7 @@ cp ../../host/etc/dnsmasq.d/es_hosts /etc/dnsmasq.d/
 sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/network/interfaces.d/es_bridge
 sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/dnsmasq.d/es_interface
 
+# /etc/network/interfaces
 [ -z "$(egrep '^source-directory\s*interfaces.d' /etc/network/interfaces || true)" ] && \
 [ -z "$(egrep '^source-directory\s*/etc/network/interfaces.d' /etc/network/interfaces || true)" ] && \
 [ -z "$(egrep '^source\s*interfaces.d/\*' /etc/network/interfaces || true)" ] && \
@@ -60,11 +60,12 @@ sed -i "s/#BRIDGE#/${BRIDGE}/g" /etc/dnsmasq.d/es_interface
 [ -z "$(egrep '^source\s*/etc/network/interfaces.d/es_bridge' /etc/network/interfaces || true)" ] && \
 echo -e "\nsource /etc/network/interfaces.d/es_bridge" >> /etc/network/interfaces
 
-# sysctl.d
-sysctl -p
+# IP forwarding
+cp ../../host/etc/sysctl.d/es_ip_forward.conf /etc/sysctl.d/
+sysctl -p /etc/sysctl.d/es_ip_forward.conf
 
 # -----------------------------------------------------------------------------
-# NETWORK CONFIG
+# BRIDGE CONFIG
 # -----------------------------------------------------------------------------
 # private bridge interface for the containers
 BR_EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
@@ -72,9 +73,6 @@ BR_EXISTS=$(brctl show | egrep "^$BRIDGE\s" || true)
 ip link set $BRIDGE up
 IP_EXISTS=$(ip a show dev $BRIDGE | egrep "inet $IP/24" || true)
 [ -z "$IP_EXISTS" ] && ip addr add dev $BRIDGE $IP/24 brd 172.22.22.255
-
-# IP forwarding
-echo 1 > /proc/sys/net/ipv4/ip_forward
 
 # -----------------------------------------------------------------------------
 # NFTABLES
