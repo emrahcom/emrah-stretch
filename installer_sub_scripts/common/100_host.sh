@@ -28,7 +28,7 @@ echo "# ----- ip route -----" >> $OLD_FILES/network.status
 ip route >> $OLD_FILES/network.status
 
 # nftables status
-if [ -n "`command -v nft`" ]
+if [ "$(systemctl is-active nftables.service)" = "active" ]
 then
 	echo "# ----- nft list ruleset -----" >> $OLD_FILES/nftables.status
 	nft list ruleset >> $OLD_FILES/nftables.status
