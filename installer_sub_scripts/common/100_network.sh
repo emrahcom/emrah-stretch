@@ -40,6 +40,25 @@ mkdir -p $OLD_FILES
 [ -f /etc/nftables.conf ] && cp /etc/nftables.conf $OLD_FILES/
 [ -f /etc/network/interfaces ] && cp /etc/network/interfaces $OLD_FILES/
 
+# network status
+echo "# ----- ip addr -----" >> $OLD_FILES/network.status
+ip addr >> $OLD_FILES/network.status
+echo >> $OLD_FILES/network.status
+echo "# ----- ip route -----" >> $OLD_FILES/network.status
+ip route >> $OLD_FILES/network.status
+
+# nftables status
+if [ "$(systemctl is-active nftables.service)" = "active" ]
+then
+	echo "# ----- nft list ruleset -----" >> $OLD_FILES/nftables.status
+	nft list ruleset >> $OLD_FILES/nftables.status
+fi
+
+# -----------------------------------------------------------------------------
+# PACKAGES
+# -----------------------------------------------------------------------------
+apt $APT_PROXY_OPTION -y install nftables
+
 # -----------------------------------------------------------------------------
 # NETWORK CONFIG
 # -----------------------------------------------------------------------------

@@ -20,20 +20,6 @@ echo "-------------------------- HOST ---------------------------"
 OLD_FILES="/root/es_old_files/$DATE"
 mkdir -p $OLD_FILES
 
-# network status
-echo "# ----- ip addr -----" >> $OLD_FILES/network.status
-ip addr >> $OLD_FILES/network.status
-echo >> $OLD_FILES/network.status
-echo "# ----- ip route -----" >> $OLD_FILES/network.status
-ip route >> $OLD_FILES/network.status
-
-# nftables status
-if [ "$(systemctl is-active nftables.service)" = "active" ]
-then
-	echo "# ----- nft list ruleset -----" >> $OLD_FILES/nftables.status
-	nft list ruleset >> $OLD_FILES/nftables.status
-fi
-
 # process status
 echo "# ----- ps auxfw -----" >> $OLD_FILES/ps.status
 ps auxfw >> $OLD_FILES/ps.status
@@ -53,6 +39,5 @@ apt $APT_PROXY_OPTION -yd full-upgrade
 apt $APT_PROXY_OPTION -y upgrade
 
 # added packages
-apt $APT_PROXY_OPTION -y install nftables
 apt $APT_PROXY_OPTION -y install lxc debootstrap bridge-utils
 apt $APT_PROXY_OPTION -y install dnsmasq
