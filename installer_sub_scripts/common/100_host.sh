@@ -45,6 +45,9 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # -----------------------------------------------------------------------------
 # PACKAGES
 # -----------------------------------------------------------------------------
+# load modules before the possible kernel update
+modprobe bridge
+
 # upgrade
 apt $APT_PROXY_OPTION -yd full-upgrade
 apt $APT_PROXY_OPTION -y upgrade
