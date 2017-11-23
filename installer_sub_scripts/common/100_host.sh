@@ -24,7 +24,7 @@ mkdir -p $OLD_FILES
 echo "# ----- ps auxfw -----" >> $OLD_FILES/ps.status
 ps auxfw >> $OLD_FILES/ps.status
 
-# Deb status
+# deb status
 echo "# ----- dpkg -l -----" >> $OLD_FILES/dpkg.status
 dpkg -l >> $OLD_FILES/dpkg.status
 
