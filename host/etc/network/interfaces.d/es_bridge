@@ -4,3 +4,4 @@ iface #BRIDGE# inet static
 address 172.22.22.1
 netmask 255.255.255.0
 bridge_ports none
+bridge_stp on
