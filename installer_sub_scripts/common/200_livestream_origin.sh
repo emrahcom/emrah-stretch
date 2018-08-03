@@ -128,9 +128,9 @@ lxc-attach -n $MACH -- \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install uwsgi uwsgi-plugin-python3
      apt $APT_PROXY_OPTION --install-recommends -y install python3-pip
-     pip3 install --upgrade pip setuptools
-     pip3 install --upgrade mydaemon
-     pip3 install --upgrade flask"
+     pip3 install --upgrade setuptools
+     pip3 install mydaemon
+     pip3 install flask"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
