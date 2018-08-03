@@ -37,6 +37,8 @@ echo "-------------------------- $MACH --------------------------"
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
 if [ -n "$EXISTS" -a "$REINSTALL_STRETCH_IF_EXISTS" != true ]
 then
+    echo "Already installed. Skipped"
+
     echo DONT_RUN_STRETCH_CUSTOM=true >> \
         $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
     exit

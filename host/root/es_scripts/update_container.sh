@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for mach in `lxc-ls -f | egrep 'RUNNING\s.*\sYES\s.*es-group' | cut -d ' ' -f1`
+for mach in `lxc-ls -f | egrep 'RUNNING.*es-group' | cut -d ' ' -f1`
 do
 	echo
 	echo "<<<" $mach ">>>"

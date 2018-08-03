@@ -4,6 +4,7 @@
 # NETWORK.SH
 # -----------------------------------------------------------------------------
 set -e
+source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
 # ENVIRONMENT
@@ -40,6 +41,8 @@ mkdir -p $OLD_FILES
 # backup the files which will be changed
 [ -f /etc/nftables.conf ] && cp /etc/nftables.conf $OLD_FILES/
 [ -f /etc/network/interfaces ] && cp /etc/network/interfaces $OLD_FILES/
+[ -f /etc/dnsmasq.d/es_hosts ] && \
+    cp /etc/dnsmasq.d/es_hosts $OLD_FILES/
 
 # network status
 echo "# ----- ip addr -----" >> $OLD_FILES/network.status

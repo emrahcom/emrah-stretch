@@ -26,8 +26,8 @@ apt $APT_PROXY_OPTION -y install cron
 apt $APT_PROXY_OPTION -y install zsh tmux vim
 apt $APT_PROXY_OPTION -y install htop iotop bmon bwm-ng
 apt $APT_PROXY_OPTION -y install iputils-ping fping wget curl whois dnsutils
-apt $APT_PROXY_OPTION -y install bzip2 rsync ack-grep
-apt $APT_PROXY_OPTION -y install openntpd
+apt $APT_PROXY_OPTION -y install bzip2 rsync ack-grep jq
+apt $APT_PROXY_OPTION -y install openntpd net-tools
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION

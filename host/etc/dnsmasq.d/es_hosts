@@ -1,4 +1,5 @@
 address=/host/172.22.22.1
+address=/reserved/172.22.22.22
 address=/es-stretch/172.22.22.254
 address=/es-compiler/172.22.22.10
 address=/es-livestream-origin/172.22.22.11

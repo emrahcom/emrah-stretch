@@ -4,6 +4,7 @@
 # POST_INSTALL_NFTABLES.SH
 # -----------------------------------------------------------------------------
 set -e
+source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
 # -----------------------------------------------------------------------------
 # INIT

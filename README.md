@@ -11,6 +11,8 @@ Table of contents
 - [Usage](#usage)
 - [Example](#example)
 - [Available templates](#available-templates)
+    - [es-base](#es-base)
+        - [To install es-base](#to-install-es-base)
     - [es-livestream](#es-livestream)
         - [Main components of es-livestream](#main-components-of-es-livestream)
         - [To install es-livestream](#to-install-es-livestream)
@@ -19,8 +21,6 @@ Table of contents
     - [es-ring-node](#es-ring-node)
         - [To install es-ring-node](#to-install-es-ring-node)
         - [Related links to es-ring-node](#related-links-to-es-ring-node)
-    - [es-base](#es-base)
-        - [To install es-base](#to-install-es-base)
 - [Requirements](#requirements)
 
 ---
@@ -33,6 +33,7 @@ coffee. That's it.
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/<TEMPLATE_NAME>.conf
 bash es <TEMPLATE_NAME>
 ```
 
@@ -43,11 +44,25 @@ To install a streaming media system, login a Debian Stretch host as `root` and
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-livestream.conf
 bash es es-livestream
 ```
 
 Available templates
 ===================
+
+es-base
+-------
+
+Install only a containerized Debian Stretch.
+
+### To install es-base
+
+```bash
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-base.conf
+bash es es-base
+```
 
 es-livestream
 -------------
@@ -70,6 +85,7 @@ Install a ready-to-use live streaming media system.
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-livestream.conf
 bash es es-livestream
 ```
 
@@ -110,7 +126,6 @@ bash es es-livestream
 
 -  [dash.js](https://github.com/Dash-Industry-Forum/dash.js/)
 
----
 
 es-ring-node
 -------------
@@ -121,6 +136,7 @@ Install a ready-to-use public Ring node.
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-ring-node.conf
 bash es es-ring-node
 ```
 
@@ -129,20 +145,6 @@ bash es es-ring-node
 -  [OpenDHT](https://github.com/savoirfairelinux/opendht)
 
 -  [Ring](https://ring.cx/)
-
----
-
-es-base
--------
-
-Install only a containerized Debian Stretch.
-
-### To install es-base
-
-```bash
-wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
-bash es es-base
-```
 
 ---
 

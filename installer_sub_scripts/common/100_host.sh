@@ -34,6 +34,9 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # load the bridge module before the possible kernel update
 [ -n "$(command -v modprobe)" ] && [ -z "$(lsmod | grep bridge)" ] && \
     modprobe bridge
+# load the veth module before the possible kernel update
+[ -n "$(command -v modprobe)" ] && [ -z "$(lsmod | grep veth)" ] && \
+    modprobe veth
 
 # upgrade
 apt $APT_PROXY_OPTION -yd full-upgrade
