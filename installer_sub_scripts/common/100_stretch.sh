@@ -85,6 +85,7 @@ cp etc/apt/apt.conf.d/80recommends $ROOTFS/etc/apt/apt.conf.d/
 # start container
 lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
+sleep 3
 
 # -----------------------------------------------------------------------------
 # PACKAGES
