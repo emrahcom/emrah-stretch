@@ -141,9 +141,9 @@ lxc-attach -n $MACH -- \
      sed -i 's/^\(ROOT_URL\s*=\).*$/\1 https:\/\/%(DOMAIN)s\//' \
          /etc/gogs/conf/app.ini
      sed -i 's/^\(FORCE_PRIVATE\s*=\).*$/\1 true/' /etc/gogs/conf/app.ini
-     sed 's/127.0.0.1:3306/\/var\/run\/mysqld\/mysqld.sock/' \
+     sed -i 's/127.0.0.1:3306/\/var\/run\/mysqld\/mysqld.sock/' \
          /etc/gogs/conf/app.ini
-     sed 's/NAME = root/NAME = gogs/' /etc/gogs/conf/app.ini"
+     sed -i 's/NAME = root/NAME = gogs/' /etc/gogs/conf/app.ini"
 
 # -----------------------------------------------------------------------------
 # SSL
