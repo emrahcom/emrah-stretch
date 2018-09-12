@@ -205,12 +205,12 @@ systemctl restart nginx.service
 
 ### Related links to es-gogs
 
-- [Gogs] (https://gogs.io/)
-- [Git] (https://git-scm.com/)
-- [Nginx] (http://nginx.org/)
-- [MariaDB] (https://mariadb.org/)
-- [Let's Encrypt] (https://letsencrypt.org/)
-- [Certbot] (https://certbot.eff.org/)
+- [Gogs](https://gogs.io/)
+- [Git](https://git-scm.com/)
+- [Nginx](http://nginx.org/)
+- [MariaDB](https://mariadb.org/)
+- [Let's Encrypt](https://letsencrypt.org/)
+- [Certbot](https://certbot.eff.org/)
 
 ---
 
