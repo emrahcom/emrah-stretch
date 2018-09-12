@@ -128,13 +128,22 @@ cp etc/nginx/snippets/es_ssl.conf $ROOTFS/etc/nginx/snippets/
 # -----------------------------------------------------------------------------
 # GOGS
 # -----------------------------------------------------------------------------
+lxc-attach -n $MACH -- mysql <<EOF
+CREATE DATABASE gogs DEFAULT CHARACTER SET utf8;
+CREATE USER gogs@localhost IDENTIFIED VIA unix_socket;
+GRANT ALL PRIVILEGES on gogs.* to gogs@localhost;
+EOF
+
 lxc-attach -n $MACH -- \
     zsh -c \
     "sed -i 's/^\(SSH_PORT\s*=\).*$/\1 $SSH_PORT/' /etc/gogs/conf/app.ini
      sed -i 's/^\(DOMAIN\s*=\).*$/\1 your.domain.name/' /etc/gogs/conf/app.ini
      sed -i 's/^\(ROOT_URL\s*=\).*$/\1 https:\/\/%(DOMAIN)s\//' \
          /etc/gogs/conf/app.ini
-     sed -i 's/^\(FORCE_PRIVATE\s*=\).*$/\1 true/' /etc/gogs/conf/app.ini"
+     sed -i 's/^\(FORCE_PRIVATE\s*=\).*$/\1 true/' /etc/gogs/conf/app.ini
+     sed 's/127.0.0.1:3306/\/var\/run\/mysqld\/mysqld.sock/' \
+         /etc/gogs/conf/app.ini
+     sed 's/NAME = root/NAME = gogs/' /etc/gogs/conf/app.ini"
 
 # -----------------------------------------------------------------------------
 # SSL
