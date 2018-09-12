@@ -152,7 +152,7 @@ supported for this template.
 ### To install es-gogs
 
 ```bash
-wget https://raw.githubusercontent.com/emrahcom/emrah-jessie/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
 wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-gogs.conf
 bash es es-gogs
 ```
