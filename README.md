@@ -165,7 +165,8 @@ bash es es-gogs
    Don't worry, only the local user can connect to the database server.
 
 -  **Domain**: Write your host FQDN or IP address. Examples:   
-   *git.mydomain.com*  *123.2.3.4*
+   *git.mydomain.com*   
+   *123.2.3.4*
 
 -  **SSH Port**: Leave the default value which is the SSH port of the
    container.
@@ -174,7 +175,8 @@ bash es es-gogs
    service.
 
 -  **Application URL**: Write your URL. HTTP and HTTPS are OK. Examples:   
-   *https://git.mydomain.com/*  *https://123.2.3.4/*
+   *https://git.mydomain.com/*    
+   *https://123.2.3.4/*
 
 -  The first registered user will be the administrator.
 
