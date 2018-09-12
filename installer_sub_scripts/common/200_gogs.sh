@@ -143,7 +143,7 @@ lxc-attach -n $MACH -- \
      sed -i 's/^\(FORCE_PRIVATE\s*=\).*$/\1 true/' /etc/gogs/conf/app.ini
      sed -i 's/127.0.0.1:3306/\/var\/run\/mysqld\/mysqld.sock/' \
          /etc/gogs/conf/app.ini
-     sed -i 's/NAME = root/NAME = gogs/' /etc/gogs/conf/app.ini"
+     sed -i 's/USER = root/USER = gogs/' /etc/gogs/conf/app.ini"
 
 # -----------------------------------------------------------------------------
 # SSL
