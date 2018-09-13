@@ -16,16 +16,26 @@ export INSTALLER="$(echo $1 | cut -d. -f1)"
 export CONFIG_FILE="${INSTALLER}.conf"
 export FREE_SPACE_NEEDED="1000000"
 
-export START_TIME=`date +%s`
-export DATE=`date +"%Y%m%d%H%M%S"`
 export GIT_REPO="https://github.com/emrahcom/emrah-stretch.git"
 export GIT_BRANCH="master"
 export GIT_LOCAL_DIR="emrah-stretch"
 export RELEASE="stretch"
-export BASEDIR=`pwd`
 
 export BRIDGE="es0"
 export SHARED="/usr/local/es"
+
+# -----------------------------------------------------------------------------
+# STATUS
+# -----------------------------------------------------------------------------
+export START_TIME=`date +%s`
+export DATE=`date +"%Y%m%d%H%M%S"`
+export BASEDIR=`pwd`
+export SWAP=$(grep SwapTotal /proc/meminfo | awk '{ print $2; }')
+export FREE_SPACE=`(df | grep "/var/lib/lxc$"
+        df | grep "/var/lib$"
+        df | grep "/var$"
+        df | egrep "/$") | \
+        head -n1 | awk '{ print $4; }'`
 
 # -----------------------------------------------------------------------------
 # CUSTOMIZATION
@@ -64,13 +74,8 @@ then
 fi
 
 # If there is not enough disk free space, cancel the installation.
-FREE=`(df | grep "/var/lib/lxc$"
-        df | grep "/var/lib$"
-        df | grep "/var$"
-        df | egrep "/$") | \
-        head -n1 | awk '{ print $4; }'`
 if [ "$DONT_CHECK_FREE_SPACE" != true \
-     -a "$FREE" -lt "$FREE_SPACE_NEEDED" ]
+     -a "$FREE_SPACE" -lt "$FREE_SPACE_NEEDED" ]
 then
 	echo
 	echo "ERROR: there is not enough disk free space"
