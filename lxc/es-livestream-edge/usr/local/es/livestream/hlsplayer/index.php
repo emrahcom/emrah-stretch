@@ -5,13 +5,12 @@ if (!preg_match('/^[a-zA-Z0-9_-]+$/', $channel)) {
 ?>
 <html>
 <head>
-    <link href="//vjs.zencdn.net/5.20.1/video-js.min.css" rel="stylesheet">
-    <script src="//vjs.zencdn.net/5.20.1/video.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.8.1/videojs-contrib-hls.js"></script>
+    <link href="//vjs.zencdn.net/7.1.0/video-js.min.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/7.1.0/video.min.js"></script>
 </head>
 
 <body>
-<video id=videojs width=512 height=288 class="video-js vjs-default-skin" controls>
+<video id=videojs autoplay width=512 height=288 class="video-js vjs-default-skin" controls>
   <source src="/livestream/hls/<?=$channel?>/index.m3u8" type="application/x-mpegURL">
 </video>
 
@@ -20,7 +19,6 @@ if (!preg_match('/^[a-zA-Z0-9_-]+$/', $channel)) {
 
 <script>
     var player = videojs('videojs');
-    player.play();
 </script>
 
 </body>
