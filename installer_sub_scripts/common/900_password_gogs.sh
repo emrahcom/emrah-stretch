@@ -10,5 +10,5 @@ source $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 if [ "$DONT_RUN_GOGS" != true ]
 then
     echo "MySQL Password: There is no password for local access."
-    echo "                Please, leave blank"
+    echo "                Please, leave it blank"
 fi
