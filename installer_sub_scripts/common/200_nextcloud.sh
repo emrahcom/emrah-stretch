@@ -102,17 +102,14 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install ssl-cert ca-certificates certbot
-     apt $APT_PROXY_OPTION -y install nginx-extras"
+     apt $APT_PROXY_OPTION -y install apache2
+     apt $APT_PROXY_OPTION -y --install-recommends install \
+         php libapache2-mod-php php-gd php-json php-mysql php-curl \
+	 php-mbstring php-intl php-mcrypt php-imagick php-xml php-zip"
 
 # -----------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # -----------------------------------------------------------------------------
-cp etc/nginx/conf.d/custom.conf $ROOTFS/etc/nginx/conf.d/
-cp etc/nginx/conf.d/proxy_buffer.conf $ROOTFS/etc/nginx/conf.d/
-cp etc/nginx/conf.d/proxy.conf $ROOTFS/etc/nginx/conf.d/
-#cp etc/nginx/sites-available/default $ROOTFS/etc/nginx/sites-available/
-cp etc/nginx/sites-available/default $ROOTFS/etc/nginx/sites-available/default.1
-cp etc/nginx/snippets/es_ssl.conf $ROOTFS/etc/nginx/snippets/
 
 # -----------------------------------------------------------------------------
 # NEXTCLOUD
@@ -125,7 +122,9 @@ EOF
 
 lxc-attach -n $MACH -- \
     zsh -c \
-    "echo "
+    "wget https://download.nextcloud.com/server/releases/latest.tar.bz2
+     tar -jxf latest.tar.bz2 -C /var/www/
+     chown -R www-data:www-data /var/www/nextcloud"
 
 # -----------------------------------------------------------------------------
 # SSL
