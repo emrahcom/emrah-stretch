@@ -41,6 +41,7 @@ dpkg -l >> $OLD_FILES/dpkg.status
 # upgrade
 apt $APT_PROXY_OPTION -yd full-upgrade
 apt $APT_PROXY_OPTION -y upgrade
+apt $APT_PROXY_OPTION -y install apt-utils
 
 # added packages
 apt $APT_PROXY_OPTION -y install lxc debootstrap bridge-utils
