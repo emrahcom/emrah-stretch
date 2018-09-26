@@ -114,9 +114,14 @@ lxc-attach -n $MACH -- \
 # -----------------------------------------------------------------------------
 # NEXTCLOUD
 # -----------------------------------------------------------------------------
+DATABASE_PASSWORD=$(echo -n $RANDOM$RANDOM$RANDOM | sha256sum | cut -c 1-20)
+ADMIN_PASSWORD=$(echo -n $RANDOM$RANDOM$RANDOM | sha256sum | cut -c 1-20)
+echo "export ADMIN_PASSWORD=$ADMIN_PASSWORD" >> \
+    $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
+
 lxc-attach -n $MACH -- mysql <<EOF
-CREATE DATABASE nextcloud DEFAULT CHARACTER SET utf8;
-CREATE USER nextcloud@localhost IDENTIFIED VIA unix_socket;
+CREATE DATABASE nextcloud DEFAULT CHARACTER SET utf8mb4;
+CREATE USER nextcloud@localhost IDENTIFIED BY '$DATABASE_PASSWORD'
 GRANT ALL PRIVILEGES on nextcloud.* to nextcloud@localhost;
 EOF
 
@@ -124,6 +129,15 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "wget https://download.nextcloud.com/server/releases/latest.tar.bz2
      tar -jxf latest.tar.bz2 -C /var/www/
+     chown -R www-data:www-data /var/www/nextcloud"
+
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "cd /var/www/nextcloud
+     php occ  maintenance:install \
+         --database 'mysql' --database-name 'nextcloud' \
+         --database-user 'nextcloud' --database-pass '$DATABASE_PASSWORD' \
+         --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
      chown -R www-data:www-data /var/www/nextcloud"
 
 # -----------------------------------------------------------------------------
