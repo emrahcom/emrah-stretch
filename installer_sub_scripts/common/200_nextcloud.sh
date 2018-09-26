@@ -121,8 +121,8 @@ echo "export ADMIN_PASSWORD=$ADMIN_PASSWORD" >> \
 
 lxc-attach -n $MACH -- mysql <<EOF
 CREATE DATABASE nextcloud DEFAULT CHARACTER SET utf8mb4;
-CREATE USER nextcloud@localhost IDENTIFIED BY '$DATABASE_PASSWORD'
-GRANT ALL PRIVILEGES on nextcloud.* to nextcloud@localhost;
+CREATE USER nextcloud@localhost IDENTIFIED BY '$DATABASE_PASSWORD';
+GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@localhost;
 EOF
 
 lxc-attach -n $MACH -- \
