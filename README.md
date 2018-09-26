@@ -216,6 +216,7 @@ systemctl restart nginx.service
 
 es-ring-node
 -------------
+This template is **obsolete**.
 
 Install a ready-to-use public Ring node.
 
