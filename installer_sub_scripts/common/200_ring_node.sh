@@ -70,7 +70,7 @@ lxc.mount.entry = $SHARED/share $ROOTFS/usr/local/es/share none bind 0 0
 lxc.network.type = veth
 lxc.network.flags = up
 lxc.network.link = $BRIDGE
-lxc.network.name = $PUBLIC_INTERFACE
+lxc.network.name = eth0
 lxc.network.ipv4 = $IP/24
 lxc.network.ipv4.gateway = auto
 EOF

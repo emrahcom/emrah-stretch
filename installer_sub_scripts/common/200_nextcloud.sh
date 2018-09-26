@@ -70,7 +70,7 @@ $ROOTFS/var/cache/apt/archives none bind 0 0
 lxc.network.type = veth
 lxc.network.flags = up
 lxc.network.link = $BRIDGE
-lxc.network.name = $PUBLIC_INTERFACE
+lxc.network.name = eth0
 lxc.network.ipv4 = $IP/24
 lxc.network.ipv4.gateway = auto
 EOF
@@ -108,10 +108,6 @@ lxc-attach -n $MACH -- \
 	 php-mbstring php-intl php-mcrypt php-imagick php-xml php-zip"
 
 # -----------------------------------------------------------------------------
-# SYSTEM CONFIGURATION
-# -----------------------------------------------------------------------------
-
-# -----------------------------------------------------------------------------
 # NEXTCLOUD
 # -----------------------------------------------------------------------------
 DATABASE_PASSWORD=$(echo -n $RANDOM$RANDOM$RANDOM | sha256sum | cut -c 1-20)
@@ -131,6 +127,10 @@ lxc-attach -n $MACH -- \
      tar -jxf latest.tar.bz2 -C /var/www/
      chown -R www-data:www-data /var/www/nextcloud"
 
+LOCAL_IP=$(ip r | egrep "dev $PUBLIC_INTERFACE .* src " | xargs | rev | \
+           cut -d " " -f1 | rev)
+REMOTE_IP=$(curl -s ifconfig.me | xargs)
+
 lxc-attach -n $MACH -- \
     zsh -c \
     "cd /var/www/nextcloud
@@ -138,6 +138,8 @@ lxc-attach -n $MACH -- \
          --database 'mysql' --database-name 'nextcloud' \
          --database-user 'nextcloud' --database-pass '$DATABASE_PASSWORD' \
          --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
+     php occ config:system:set trusted_domains 1 --value=$LOCAL_IP
+     php occ config:system:set trusted_domains 2 --value=$REMOTE_IP
      chown -R www-data:www-data /var/www/nextcloud"
 
 # -----------------------------------------------------------------------------
@@ -149,10 +151,27 @@ lxc-attach -n $MACH -- \
      cp -ap /etc/ssl/private/{ssl-cert-snakeoil.key,ssl-es.key}"
 
 # -----------------------------------------------------------------------------
+# APACHE2
+# -----------------------------------------------------------------------------
+cp etc/apache2/conf-available/servername.conf \
+    $ROOTFS/etc/apache2/conf-available/
+cp etc/apache2/sites-available/000-nextcloud.conf \
+    $ROOTFS/etc/apache2/sites-available/
+
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "a2enmod headers
+     a2enmod rewrite
+     a2enmod ssl
+     a2enconf servername.conf
+     a2dissite 000-default.conf
+     a2ensite 000-nextcloud.conf"
+
+# -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
 lxc-attach -n $MACH -- systemctl restart mariadb.service
-lxc-attach -n $MACH -- systemctl restart nginx.service
+lxc-attach -n $MACH -- systemctl restart apache2.service
 
 lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
