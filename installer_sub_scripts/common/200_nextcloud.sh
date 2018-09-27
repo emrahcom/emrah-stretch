@@ -132,11 +132,18 @@ GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@localhost;
 EOF
 
 # web application
+mkdir -p /root/es_store
+if [ ! -f /root/es_store/nextcloud.tar.bz2 ]
+then
+    wget -O $BASEDIR/nextcloud.tar.bz2 \
+         https://download.nextcloud.com/server/releases/latest.tar.bz2
+    mv $BASEDIR/nextcloud.tar.bz2 /root/es_store/
+fi
+tar -jxf /root/es_store/nextcloud.tar.bz2 -C $ROOTFS/var/www/
+
 lxc-attach -n $MACH -- \
     zsh -c \
-    "wget https://download.nextcloud.com/server/releases/latest.tar.bz2
-     tar -jxf latest.tar.bz2 -C /var/www/
-     chown -R www-data:www-data /var/www/nextcloud"
+    "chown -R www-data:www-data /var/www/nextcloud"
 
 # www-data user
 lxc-attach -n $MACH -- \
