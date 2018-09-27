@@ -104,8 +104,8 @@ lxc-attach -n $MACH -- \
      apt $APT_PROXY_OPTION -y install ssl-cert ca-certificates certbot
      apt $APT_PROXY_OPTION -y install apache2
      apt $APT_PROXY_OPTION -y --install-recommends install \
-         php libapache2-mod-php php-gd php-json php-mysql php-curl php-apcu \
-	 php-mbstring php-intl php-mcrypt php-imagick php-xml php-zip"
+         php libapache2-mod-php php-fpm php-apcu php-mysql php-json php-xml \
+         php-curl php-mbstring php-intl php-mcrypt php-imagick php-gd php-zip"
 
 # -----------------------------------------------------------------------------
 # NEXTCLOUD
@@ -176,10 +176,17 @@ cp etc/php/7.0/apache2/php.ini $ROOTFS/etc/php/7.0/apache2/
 
 lxc-attach -n $MACH -- \
     zsh -c \
-    "a2enmod headers
+    "a2dismod php7.0
+     a2dismod mpm_prefork
+     a2enmod mpm_event
+     a2enmod proxy_fcgi setenvif
+     a2enmod headers
      a2enmod rewrite
      a2enmod ssl
+     a2enmod http2
+
      a2enconf servername.conf
+     a2enconf php7.0-fpm.conf
      a2dissite 000-default.conf
      a2ensite 000-nextcloud.conf"
 
