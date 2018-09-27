@@ -129,6 +129,13 @@ lxc-attach -n $MACH -- \
      tar -jxf latest.tar.bz2 -C /var/www/
      chown -R www-data:www-data /var/www/nextcloud"
 
+# www-data user
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "systemctl stop apache2
+     chsh -s /bin/bash www-data
+     usermod -d /var/www/nextcloud www-data"
+
 LOCAL_IP=$(ip r | egrep "dev $PUBLIC_INTERFACE .* src " | xargs | rev | \
            cut -d " " -f1 | rev)
 REMOTE_IP=$(curl -s ifconfig.me | xargs)
@@ -144,18 +151,21 @@ lxc-attach -n $MACH -- \
      php occ config:system:set trusted_domains 1 --value=$LOCAL_IP
      php occ config:system:set trusted_domains 2 --value=$REMOTE_IP
      php occ config:system:set 'memcache.local' --value='\OC\Memcache\APCu'
+     php occ background:cron
 
      php occ app:install spreed
      php occ app:enable spreed
 
      chown -R www-data:www-data /var/www/nextcloud"
 
-# www-data user
+# nextcloud cronjob
+cp etc/systemd/system/nextcloudcron.* $ROOTFS/etc/systemd/system/
+
 lxc-attach -n $MACH -- \
     zsh -c \
-    "systemctl stop apache2
-     chsh -s /bin/bash www-data
-     usermod -d /var/www/nextcloud www-data"
+    "systemctl daemon-reload
+     systemctl start nextcloudcron.timer
+     systemctl enable nextcloudcron.timer"
 
 # -----------------------------------------------------------------------------
 # SSL
