@@ -108,6 +108,14 @@ lxc-attach -n $MACH -- \
          php-curl php-mbstring php-intl php-mcrypt php-imagick php-gd php-zip"
 
 # -----------------------------------------------------------------------------
+# MARIADB
+# -----------------------------------------------------------------------------
+cp etc/mysql/conf.d/es.cnf $ROOTFS/etc/mysql/conf.d/
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "systemctl restart mariadb.service"
+
+# -----------------------------------------------------------------------------
 # NEXTCLOUD
 # -----------------------------------------------------------------------------
 DATABASE_PASSWORD=$(echo -n $RANDOM$RANDOM$RANDOM | sha256sum | cut -c 1-20)
@@ -117,7 +125,8 @@ echo "export ADMIN_PASSWORD=$ADMIN_PASSWORD" >> \
 
 # database
 lxc-attach -n $MACH -- mysql <<EOF
-CREATE DATABASE nextcloud DEFAULT CHARACTER SET utf8mb4;
+CREATE DATABASE nextcloud
+    DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 CREATE USER nextcloud@localhost IDENTIFIED BY '$DATABASE_PASSWORD';
 GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@localhost;
 EOF
