@@ -104,7 +104,7 @@ lxc-attach -n $MACH -- \
      apt $APT_PROXY_OPTION -y install ssl-cert ca-certificates certbot
      apt $APT_PROXY_OPTION -y install apache2
      apt $APT_PROXY_OPTION -y --install-recommends install \
-         php libapache2-mod-php php-gd php-json php-mysql php-curl \
+         php libapache2-mod-php php-gd php-json php-mysql php-curl php-apcu \
 	 php-mbstring php-intl php-mcrypt php-imagick php-xml php-zip"
 
 # -----------------------------------------------------------------------------
@@ -115,12 +115,14 @@ ADMIN_PASSWORD=$(echo -n $RANDOM$RANDOM$RANDOM | sha256sum | cut -c 1-20)
 echo "export ADMIN_PASSWORD=$ADMIN_PASSWORD" >> \
     $BASEDIR/$GIT_LOCAL_DIR/installer_sub_scripts/$INSTALLER/000_source
 
+# database
 lxc-attach -n $MACH -- mysql <<EOF
 CREATE DATABASE nextcloud DEFAULT CHARACTER SET utf8mb4;
 CREATE USER nextcloud@localhost IDENTIFIED BY '$DATABASE_PASSWORD';
 GRANT ALL PRIVILEGES ON nextcloud.* TO nextcloud@localhost;
 EOF
 
+# web application
 lxc-attach -n $MACH -- \
     zsh -c \
     "wget https://download.nextcloud.com/server/releases/latest.tar.bz2
@@ -131,6 +133,7 @@ LOCAL_IP=$(ip r | egrep "dev $PUBLIC_INTERFACE .* src " | xargs | rev | \
            cut -d " " -f1 | rev)
 REMOTE_IP=$(curl -s ifconfig.me | xargs)
 
+# nextcloud config
 lxc-attach -n $MACH -- \
     zsh -c \
     "cd /var/www/nextcloud
@@ -140,7 +143,19 @@ lxc-attach -n $MACH -- \
          --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
      php occ config:system:set trusted_domains 1 --value=$LOCAL_IP
      php occ config:system:set trusted_domains 2 --value=$REMOTE_IP
+     php occ config:system:set 'memcache.local' --value='\OC\Memcache\APCu'
+
+     php occ app:install spreed
+     php occ app:enable spreed
+
      chown -R www-data:www-data /var/www/nextcloud"
+
+# www-data user
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "systemctl stop apache2
+     chsh -s /bin/bash www-data
+     usermod -d /var/www/nextcloud www-data"
 
 # -----------------------------------------------------------------------------
 # SSL
@@ -151,12 +166,13 @@ lxc-attach -n $MACH -- \
      cp -ap /etc/ssl/private/{ssl-cert-snakeoil.key,ssl-es.key}"
 
 # -----------------------------------------------------------------------------
-# APACHE2
+# APACHE2 & PHP
 # -----------------------------------------------------------------------------
 cp etc/apache2/conf-available/servername.conf \
     $ROOTFS/etc/apache2/conf-available/
 cp etc/apache2/sites-available/000-nextcloud.conf \
     $ROOTFS/etc/apache2/sites-available/
+cp etc/php/7.0/apache2/php.ini $ROOTFS/etc/php/7.0/apache2/
 
 lxc-attach -n $MACH -- \
     zsh -c \
