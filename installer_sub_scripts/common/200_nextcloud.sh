@@ -192,6 +192,7 @@ cp etc/apache2/conf-available/servername.conf \
     $ROOTFS/etc/apache2/conf-available/
 cp etc/apache2/sites-available/000-nextcloud.conf \
     $ROOTFS/etc/apache2/sites-available/
+cp etc/php/7.0/fpm/php.ini $ROOTFS/etc/php/7.0/fpm/
 cp etc/php/7.0/apache2/php.ini $ROOTFS/etc/php/7.0/apache2/
 
 lxc-attach -n $MACH -- \
