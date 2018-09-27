@@ -24,6 +24,12 @@ Table of contents
         - [After install es-gogs](#after-install-es-gogs)
         - [SSL certificate for es-gogs](#ssl-certificate-for-es-gogs)
         - [Related links to es-gogs](#related-links-to-es-gogs)
+    - [es-nextcloud](#es-nextcloud)
+        - [Main components of es-nextcloud](#main-components-of-es-nextcloud)
+        - [To install es-nextcloud](#to-install-es-nextcloud)
+        - [After install es-nextcloud](#after-install-es-nextcloud)
+        - [SSL certificate for es-nextcloud](#ssl-certificate-for-es-nextcloud)
+        - [Related links to es-nextcloud](#related-links-to-es-nextcloud)
     - [es-ring-node](#es-ring-node)
         - [To install es-ring-node](#to-install-es-ring-node)
         - [Related links to es-ring-node](#related-links-to-es-ring-node)
@@ -208,6 +214,61 @@ systemctl restart nginx.service
 - [Gogs](https://gogs.io/)
 - [Git](https://git-scm.com/)
 - [Nginx](http://nginx.org/)
+- [MariaDB](https://mariadb.org/)
+- [Let's Encrypt](https://letsencrypt.org/)
+- [Certbot](https://certbot.eff.org/)
+
+---
+
+es-nextcloud
+------------
+
+Install a ready-to-use self-hosted Nextcloud service.
+
+### Main components of es-nextcloud
+
+- Nextcloud
+- Apache
+- MariaDB
+
+### To install es-nextcloud
+
+```bash
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es
+wget https://raw.githubusercontent.com/emrahcom/emrah-stretch/master/installer/es-nextcloud.conf
+bash es es-nextcloud
+```
+
+### After install es-nextcloud
+
+-  `https://<IP_ADDRESS>/` to access Nextcloud web panel.
+
+### SSL certificate for es-nextcloud
+
+To use Let's Encrypt certificate, connect to es-nextcloud container as root and
+
+```bash
+FQDN="your.host.fqdn"
+
+certbot certonly --webroot -w /var/www/html -d $FQDN
+
+chmod 750 /etc/letsencrypt/{archive,live}
+chown root:ssl-cert /etc/letsencrypt/{archive,live}
+mv /etc/ssl/certs/{ssl-es.pem,ssl-es.pem.bck}
+mv /etc/ssl/private/{ssl-es.key,ssl-es.key.bck}
+ln -s /etc/letsencrypt/live/$FQDN/fullchain.pem \
+    /etc/ssl/certs/ssl-es.pem
+ln -s /etc/letsencrypt/live/$FQDN/privkey.pem \
+    /etc/ssl/private/ssl-es.key
+
+systemctl restart apache2.service
+```
+
+
+### Related links to es-nextcloud
+
+- [Nextcloud](https://nextcloud.com/)
+- [Apache](https://apache.org/)
 - [MariaDB](https://mariadb.org/)
 - [Let's Encrypt](https://letsencrypt.org/)
 - [Certbot](https://certbot.eff.org/)
