@@ -142,6 +142,7 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "systemctl stop apache2
+     systemctl stop php7.0-fpm.service
      chsh -s /bin/bash www-data
      usermod -d /var/www/nextcloud www-data"
 
@@ -212,6 +213,7 @@ lxc-attach -n $MACH -- \
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
+lxc-attach -n $MACH -- systemctl restart php7.0-fpm.service
 lxc-attach -n $MACH -- systemctl restart mariadb.service
 lxc-attach -n $MACH -- systemctl restart apache2.service
 
