@@ -105,7 +105,8 @@ lxc-attach -n $MACH -- \
      apt $APT_PROXY_OPTION -y install apache2
      apt $APT_PROXY_OPTION -y --install-recommends install \
          php libapache2-mod-php php-fpm php-apcu php-mysql php-json php-xml \
-         php-curl php-mbstring php-intl php-mcrypt php-imagick php-gd php-zip"
+         php-curl php-mbstring php-intl php-mcrypt php-imagick php-gd php-zip \
+         php-ldap"
 
 # -----------------------------------------------------------------------------
 # MARIADB
@@ -212,6 +213,7 @@ lxc-attach -n $MACH -- \
      a2enmod rewrite
      a2enmod ssl
      a2enmod http2
+     a2enmod ldap
 
      a2enconf servername.conf
      a2enconf php7.0-fpm.conf
