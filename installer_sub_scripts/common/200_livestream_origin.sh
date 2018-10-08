@@ -110,6 +110,10 @@ lxc-attach -n $MACH -- \
 lxc-attach -n $MACH -- \
     zsh -c \
     "export DEBIAN_FRONTEND=noninteractive
+     apt $APT_PROXY_OPTION -y install xmlstarlet libxml2-utils"
+lxc-attach -n $MACH -- \
+    zsh -c \
+    "export DEBIAN_FRONTEND=noninteractive
      apt $APT_PROXY_OPTION -y install ffmpeg
      apt $APT_PROXY_OPTION -y install libgd3 libluajit-5.1-2 libxslt1.1 \
          libhiredis0.13

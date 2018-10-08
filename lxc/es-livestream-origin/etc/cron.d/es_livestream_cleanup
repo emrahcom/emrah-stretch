@@ -2,3 +2,4 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 * *	* * *	root	/root/es_scripts/livestream_cleanup.sh >/dev/null 2>&1
+* *	* * *	root	/root/es_scripts/broken_stream_cleanup.sh >/dev/null 2>&1
