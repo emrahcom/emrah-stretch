@@ -162,7 +162,7 @@ REMOTE_IP=$(curl -s ifconfig.me | xargs)
 lxc-attach -n $MACH -- \
     zsh -c \
     "cd /var/www/nextcloud
-     php occ  maintenance:install \
+     php occ maintenance:install \
          --database 'mysql' --database-name 'nextcloud' \
          --database-user 'nextcloud' --database-pass '$DATABASE_PASSWORD' \
          --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
