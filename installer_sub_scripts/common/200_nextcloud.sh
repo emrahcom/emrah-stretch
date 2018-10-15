@@ -168,6 +168,7 @@ lxc-attach -n $MACH -- \
          --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
      php occ config:system:set trusted_domains 1 --value=$LOCAL_IP
      php occ config:system:set trusted_domains 2 --value=$REMOTE_IP
+     php occ config:system:set trusted_domains 3 --value=*
      php occ config:system:set 'memcache.local' --value='\OC\Memcache\APCu'
      php occ background:cron
 
