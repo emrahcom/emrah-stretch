@@ -224,8 +224,8 @@ lxc-attach -n $MACH -- \
 # -----------------------------------------------------------------------------
 # CONTAINER SERVICES
 # -----------------------------------------------------------------------------
-lxc-attach -n $MACH -- systemctl restart php7.0-fpm.service
 lxc-attach -n $MACH -- systemctl restart mariadb.service
+lxc-attach -n $MACH -- systemctl restart php7.0-fpm.service
 lxc-attach -n $MACH -- systemctl restart apache2.service
 
 lxc-stop -n $MACH
