@@ -250,7 +250,7 @@ To use Let's Encrypt certificate, connect to es-nextcloud container as root and
 ```bash
 FQDN="your.host.fqdn"
 
-certbot certonly --webroot -w /var/www/html -d $FQDN
+certbot certonly --webroot -w /var/www/nextcloud -d $FQDN
 
 chmod 750 /etc/letsencrypt/{archive,live}
 chown root:ssl-cert /etc/letsencrypt/{archive,live}
