@@ -156,7 +156,7 @@ lxc-attach -n $MACH -- \
      cp -r /etc/skel/. /home/nextcloud
      echo >>/home/nextcloud/.bashrc
      echo 'cd /var/www/nextcloud' >>/home/nextcloud/.bashrc
-     chown www-data:www-data /home/nextcloud
+     chown www-data:www-data /home/nextcloud -R
 
      usermod -d /home/nextcloud www-data
      chsh -s /bin/bash www-data"
