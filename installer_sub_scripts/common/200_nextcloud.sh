@@ -134,7 +134,7 @@ EOF
 
 # web application
 mkdir -p /root/es_store
-if [ ! -f /root/es_store/nextcloud.tar.bz2 ]
+if [ ! "$(find /root/es_store/nextcloud.tar.bz2 -ctime -10)" ]
 then
     wget -O $BASEDIR/nextcloud.tar.bz2 \
          https://download.nextcloud.com/server/releases/latest.tar.bz2
@@ -151,8 +151,15 @@ lxc-attach -n $MACH -- \
     zsh -c \
     "systemctl stop apache2
      systemctl stop php7.0-fpm.service
-     chsh -s /bin/bash www-data
-     usermod -d /var/www/nextcloud www-data"
+
+     mkdir /home/nextcloud
+     cp -r /etc/skel/. /home/nextcloud
+     echo >>/home/nextcloud/.bashrc
+     echo 'cd /var/www/nextcloud' >>/home/nextcloud/.bashrc
+     chown www-data:www-data /home/nextcloud
+
+     usermod -d /home/nextcloud www-data
+     chsh -s /bin/bash www-data"
 
 LOCAL_IP=$(ip r | egrep "dev $PUBLIC_INTERFACE .* src " | xargs | rev | \
            cut -d " " -f1 | rev)
