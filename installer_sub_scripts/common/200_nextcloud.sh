@@ -173,6 +173,7 @@ lxc-attach -n $MACH -- \
          --database 'mysql' --database-name 'nextcloud' \
          --database-user 'nextcloud' --database-pass '$DATABASE_PASSWORD' \
          --admin-user 'admin' --admin-pass '$ADMIN_PASSWORD'
+     php occ db:convert-filecache-bigint --no-interaction
      php occ config:system:set trusted_domains 1 --value=$LOCAL_IP
      php occ config:system:set trusted_domains 2 --value=$REMOTE_IP
      php occ config:system:set trusted_domains 3 --value='*'
